@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { deleteCookie } from '../helpers/cookies';
 
-const Header = ({setUser}) => {
+const Header = ({user, setUser}) => {
     const navigate = useNavigate();
 
     const logOut = () => {
@@ -18,7 +18,10 @@ const Header = ({setUser}) => {
             <h1>
                 <Link to="/">odinbook</Link>
             </h1>
-            <button onClick={logOut}>Log Out</button>
+            <div>
+                <span>{user.firstName}</span>
+                <button onClick={logOut}>Log Out</button>
+            </div>
         </header>
     );
 };
