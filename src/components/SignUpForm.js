@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const SignUpForm = ({user, setShowSignUpForm}) => {
     const [signUpForm, setSignUpForm] = useState({
