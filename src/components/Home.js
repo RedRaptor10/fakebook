@@ -1,16 +1,23 @@
 import Header from './Header';
+import Sidebar from './Sidebar';
+import Timeline from './Timeline';
+import Contacts from './Contacts';
 import LogInForm from './LogInForm';
 
 const Home = ({user, setUser}) => {
 
     return (
-        <main id="home">
-            {user ?
-                <Header setUser={setUser} />
-            :
-                <LogInForm user={user} setUser={setUser} />
-            }
-        </main>
+        user ?
+            <div id="home">
+                <Header user={user} setUser={setUser} />
+                <main>
+                    <Sidebar user={user} />
+                    <Timeline />
+                    <Contacts />
+                </main>
+            </div>
+        :
+            <LogInForm user={user} setUser={setUser} />
     );
 };
 
