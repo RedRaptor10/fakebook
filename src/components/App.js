@@ -13,7 +13,7 @@ const App = () => {
   return (
     <HashRouter>
       <Routes>
-        <Route exact path="/" element={<Home user={user} />} />
+        <Route exact path="/" element={<Home user={user} setUser={setUser} />} />
       </Routes>
     </HashRouter>
   );

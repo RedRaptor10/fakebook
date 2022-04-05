@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SignUpForm from './SignUpForm';
 
-const Home = ({user}) => {
+const Home = ({user, setUser}) => {
     const [logInForm, setLogInForm] = useState({
         email: '',
         password: ''
@@ -17,7 +17,29 @@ const Home = ({user}) => {
     };
 
     const submitLogIn = event => {
+        event.preventDefault();
 
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: logInForm.email,
+                password: logInForm.password
+            }),
+            mode: 'cors'
+        };
+
+        fetch(process.env.REACT_APP_SERVER + 'api/log-in', options)
+        .then(function(res) { return res.json(); })
+        .then(function(res) {
+            if (res.errors) { setLogInErrors(res.errors); } // Email/password required
+            else if (!res.user) { setLogInErrors([{ msg: res.info.message }]); } // Incorrect email/password
+            else {
+                // Success. Set token as a cookie and set user
+                document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
+                setUser(res.user);
+            }
+        });
     };
 
     return (
