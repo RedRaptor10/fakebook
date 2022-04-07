@@ -19,7 +19,7 @@ const Header = ({user, setUser}) => {
                 <Link to="/">odinbook</Link>
             </h1>
             <div>
-                <span>{user.firstName}</span>
+                <Link to={'/' + user.username}>{user.firstName}</Link>
                 <button onClick={logOut}>Log Out</button>
             </div>
         </header>
