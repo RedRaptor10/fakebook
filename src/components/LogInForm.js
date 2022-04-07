@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import SignUpForm from './SignUpForm';
 
-const LogInForm = ({user, setUser}) => {
+const LogInForm = ({setUser}) => {
     const [logInForm, setLogInForm] = useState({
         email: '',
         password: ''
@@ -65,7 +65,7 @@ const LogInForm = ({user, setUser}) => {
             </form>
 
             {showSignUpForm ?
-                <SignUpForm user={user} setShowSignUpForm={setShowSignUpForm} />
+                <SignUpForm setShowSignUpForm={setShowSignUpForm} />
             : null}
         </div>
     );
