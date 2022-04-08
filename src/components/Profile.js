@@ -29,6 +29,28 @@ const Profile = ({user, setUser}) => {
         });
     }, [username]);
 
+    const handleRequest = action => {
+        let subroute;
+        if (action === 'delete') { subroute = '/delete-friend' }
+        else if (action === 'send') { subroute = '/send-request' }
+        else if (action === 'deleteSent') { subroute = '/delete-request/sent' }
+
+        let token = getCookie('odinbook_api_token');
+
+        const options = {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token },
+            mode: 'cors'
+        };
+
+        fetch(process.env.REACT_APP_SERVER + 'api/users/' + username + subroute, options)
+        .then(function(res) { return res.json(); })
+        .then(function(res) {
+            setUser(res.user);
+            setProfile(res.targetUser);
+        });
+    };
+
     return (
         profile ?
             <main id="profile">
@@ -39,7 +61,12 @@ const Profile = ({user, setUser}) => {
                     <div id="profile-pic"></div>
                     <h1>{profile.firstName + ' ' + profile.lastName}</h1>
                     <h3>{profile.friends.length + ' Friends'}</h3>
-                    <button>Edit profile</button>
+                    {user._id === profile._id ?
+                        <button>Edit profile</button>
+                    :
+                        profile.friends.includes(user._id) ? <button onClick={() => { handleRequest('delete') }}>Delete Friend</button> :
+                            profile.requests.received.includes(user._id) ? <button onClick={() => { handleRequest('deleteSent') }}>Cancel Friend Request</button> :
+                                <button onClick={() => { handleRequest('send') }}>Add Friend</button>}
                 </section>
                 <nav id="profile-nav">
                     <ul>
@@ -59,7 +86,7 @@ const Profile = ({user, setUser}) => {
                             {profile.friends.length > 0 ?
                                 profile.friends.map(friend => {
                                     return (
-                                        <div>
+                                        <div key={friend._id}>
                                             {friend.firstName + ' ' + friend.lastName}
                                         </div>
                                     )
