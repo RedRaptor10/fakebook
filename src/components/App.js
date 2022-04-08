@@ -4,6 +4,7 @@ import Header from './Header';
 import LogInForm from './LogInForm';
 import Home from './Home';
 import Profile from './Profile';
+import Requests from './Requests';
 import { getCookie, deleteCookie } from '../helpers/cookies';
 
 const App = () => {
@@ -42,7 +43,10 @@ const App = () => {
       setUser(res);
       setLoaded(true);
     })
-    .catch(err => { console.log(err.message); });
+    .catch(err => {
+      console.log(err.message);
+      setLoaded(true);
+    });
   }, []);
 
   return (
@@ -53,7 +57,10 @@ const App = () => {
             <Route exact path="/" element={
               user ? <Home user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />} />
             <Route exact path="/:username" element={
-              user ? <Profile user={user} /> : <LogInForm setUser={setUser} />
+              user ? <Profile user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />
+            } />
+            <Route exact path="/friends/requests" element={
+              user ? <Requests user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />
             } />
           </Routes>
         </HashRouter>
