@@ -16,58 +16,13 @@ const Requests = ({user, setUser}) => {
             mode: 'cors'
         };
 
-        const promises = [];
-
-        if (type === 'sent') {
-            // Calling asynchronous fetch in loop requires Promises
-            user.requests.sent.forEach(sent => {
-                promises.push(new Promise(resolve => {
-                    fetch(process.env.REACT_APP_SERVER + 'api/users/id/' + sent, options)
-                    .then(function(res) { return res.json(); })
-                    .then(function(res) {
-                        resolve({
-                            _id: res._id,
-                            username: res.username,
-                            firstName: res.firstName,
-                            lastName: res.lastName,
-                            pic: res.pic
-                        });
-                    });
-                }))
-            });
-        } else if (type === 'received') {
-            user.requests.received.forEach(received => {
-                promises.push(new Promise(resolve => {
-                    fetch(process.env.REACT_APP_SERVER + 'api/users/id/' + received, options)
-                    .then(function(res) { return res.json(); })
-                    .then(function(res) {
-                        resolve({
-                            _id: res._id,
-                            username: res.username,
-                            firstName: res.firstName,
-                            lastName: res.lastName,
-                            pic: res.pic
-                        });
-                    });
-                }))
-            });
-        }
-
-        // Fetch loop finished, condensate promises into single promise
-        Promise.all(promises).then(results => {
-            const temp = [];
-
-            results.forEach(result => {
-                temp.push(result);
-            });
-
-            if (type === 'sent') {
-                setSent(temp);
-            } else if (type === 'received') {
-                setReceived(temp);
-            }
+        fetch(process.env.REACT_APP_SERVER + 'api/get-requests/' + type, options)
+        .then(function(res) { return res.json(); })
+        .then(function(res) {
+            if (type === 'sent') { setSent(res); }
+            else if (type === 'received') { setReceived(res); }
         });
-    }, [user, type, user.requests.sent, user.requests.received]);
+    }, [user, type]);
 
     const handleRequest = (action, username) => {
         let subroute;
@@ -86,7 +41,9 @@ const Requests = ({user, setUser}) => {
         fetch(process.env.REACT_APP_SERVER + 'api/users/' + username + subroute, options)
         .then(function(res) { return res.json(); })
         .then(function(res) {
+            // Set User state and update token
             setUser(res.user);
+            document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
         });
     };
 
