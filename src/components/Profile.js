@@ -46,8 +46,10 @@ const Profile = ({user, setUser}) => {
         fetch(process.env.REACT_APP_SERVER + 'api/users/' + username + subroute, options)
         .then(function(res) { return res.json(); })
         .then(function(res) {
+            // Set User and Profile states and update token
             setUser(res.user);
             setProfile(res.targetUser);
+            document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
         });
     };
 
