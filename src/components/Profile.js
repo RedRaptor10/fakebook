@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getCookie } from '../helpers/cookies';
 
 const Profile = ({user, setUser}) => {
     const { username } = useParams(); // Get profile username from url
     const [profile, setProfile] = useState();
-    const [posts, setPosts] = useState([]);
+    const [friends, setFriends] = useState();
+    const [posts, setPosts] = useState();
 
     // Get Profile on mount & update
     useEffect(() => {
@@ -25,7 +26,16 @@ const Profile = ({user, setUser}) => {
             // Get Posts
             fetch(process.env.REACT_APP_SERVER + 'api/posts/users/' + res._id, options)
             .then(function(res) { return res.json(); })
-            .then(function(res) { setPosts(res); });
+            .then(function(res) {
+                setPosts(res);
+
+                // Get Friends
+                fetch(process.env.REACT_APP_SERVER + 'api/users/' + username + '/get-friends', options)
+                .then(function(res) { return res.json(); })
+                .then(function(res) {
+                    setFriends(res);
+                });
+            });
         });
     }, [username]);
 
@@ -48,7 +58,7 @@ const Profile = ({user, setUser}) => {
         .then(function(res) {
             // Set User and Profile states and update token
             setUser(res.user);
-            setProfile(res.targetUser);
+            setProfile(res.target);
             document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
         });
     };
@@ -62,7 +72,7 @@ const Profile = ({user, setUser}) => {
                 <section id="profile-info">
                     <div id="profile-pic"></div>
                     <h1>{profile.firstName + ' ' + profile.lastName}</h1>
-                    <h3>{profile.friends.length + ' Friends'}</h3>
+                    <h3>{profile.friends.length + (profile.friends.length === 1 ? ' Friend' : ' Friends')}</h3>
                     {user._id === profile._id ?
                         <button>Edit profile</button>
                     :
@@ -85,12 +95,12 @@ const Profile = ({user, setUser}) => {
                         </div>
                         <div id="profile-main-friends">
                             <h3>Friends</h3>
-                            {profile.friends.length > 0 ?
-                                profile.friends.map(friend => {
+                            {friends ?
+                                friends.map(friend => {
                                     return (
-                                        <div key={friend._id}>
+                                        <Link key={friend._id} to={'/' + friend.username}>
                                             {friend.firstName + ' ' + friend.lastName}
-                                        </div>
+                                        </Link>
                                     )
                                 })
                             : null}
