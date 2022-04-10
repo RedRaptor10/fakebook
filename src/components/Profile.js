@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getCookie } from '../helpers/cookies';
-import PostCreate from './PostCreate';
+import PostForm from './PostForm';
 
 const Profile = ({user, setUser}) => {
     const { username } = useParams(); // Get profile username from url
     const [profile, setProfile] = useState();
     const [friends, setFriends] = useState();
     const [posts, setPosts] = useState();
-    const [createPost, setCreatePost] = useState(false);
+    const [showPostForm, setShowPostForm] = useState(false);
+    const [postType, setPostType] = useState();
+    const [updatePostId, setUpdatePostId] = useState();
     const [postedToggle, setPostedToggle] = useState(false);
 
     // Get Profile on mount & update
@@ -64,6 +66,18 @@ const Profile = ({user, setUser}) => {
             setProfile(res.target);
             document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
         });
+    };
+
+    const createPost = () => {
+        setPostType('create');
+        setUpdatePostId();
+        setShowPostForm(true);
+    };
+
+    const updatePost = postId => {
+        setPostType('update');
+        setUpdatePostId(postId);
+        setShowPostForm(true);
     };
 
     const deletePost = postId => {
@@ -126,7 +140,7 @@ const Profile = ({user, setUser}) => {
                         </div>
                     </aside>
                     <div id="profile-posts-container">
-                        <div onClick={() => { setCreatePost(true) }}>Create Post</div>
+                        <div onClick={createPost}>Create Post</div>
                         <h3>Posts</h3>
                         <div id="profile-posts">
                             {posts ?
@@ -134,6 +148,7 @@ const Profile = ({user, setUser}) => {
                                     return (
                                         <div key={post._id} className="post">
                                             {post.content}
+                                            <button onClick={() => { updatePost(post._id) }}>Update</button>
                                             <button onClick={() => { deletePost(post._id) }}>Delete</button>
                                         </div>
                                     )
@@ -142,8 +157,8 @@ const Profile = ({user, setUser}) => {
                         </div>
                     </div>
                 </section>
-                {createPost ?
-                    <PostCreate user={user} setCreatePost={setCreatePost}
+                {showPostForm ?
+                    <PostForm user={user} type={postType} postId={updatePostId} setShowPostForm={setShowPostForm}
                         postedToggle={postedToggle} setPostedToggle={setPostedToggle} />
                 : null}
             </main>
