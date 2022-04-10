@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getCookie } from '../helpers/cookies';
+import PostCreate from './PostCreate';
 
 const Profile = ({user, setUser}) => {
     const { username } = useParams(); // Get profile username from url
     const [profile, setProfile] = useState();
     const [friends, setFriends] = useState();
     const [posts, setPosts] = useState();
+    const [createPost, setCreatePost] = useState(false);
+    const [postedToggle, setPostedToggle] = useState(false);
 
     // Get Profile on mount & update
     useEffect(() => {
@@ -37,7 +40,7 @@ const Profile = ({user, setUser}) => {
                 });
             });
         });
-    }, [username]);
+    }, [username, postedToggle]);
 
     const handleRequest = action => {
         let subroute;
@@ -60,6 +63,22 @@ const Profile = ({user, setUser}) => {
             setUser(res.user);
             setProfile(res.target);
             document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
+        });
+    };
+
+    const deletePost = postId => {
+        let token = getCookie('odinbook_api_token');
+
+        const options = {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token },
+            mode: 'cors'
+        };
+
+        fetch(process.env.REACT_APP_SERVER + 'api/posts/' + postId + '/delete', options)
+        .then(function(res) { return res.json(); })
+        .then(function(res) {
+            postedToggle ? setPostedToggle(false) : setPostedToggle(true);
         });
     };
 
@@ -107,6 +126,7 @@ const Profile = ({user, setUser}) => {
                         </div>
                     </aside>
                     <div id="profile-posts-container">
+                        <div onClick={() => { setCreatePost(true) }}>Create Post</div>
                         <h3>Posts</h3>
                         <div id="profile-posts">
                             {posts ?
@@ -114,6 +134,7 @@ const Profile = ({user, setUser}) => {
                                     return (
                                         <div key={post._id} className="post">
                                             {post.content}
+                                            <button onClick={() => { deletePost(post._id) }}>Delete</button>
                                         </div>
                                     )
                                 })
@@ -121,6 +142,10 @@ const Profile = ({user, setUser}) => {
                         </div>
                     </div>
                 </section>
+                {createPost ?
+                    <PostCreate user={user} setCreatePost={setCreatePost}
+                        postedToggle={postedToggle} setPostedToggle={setPostedToggle} />
+                : null}
             </main>
         : null
     );
