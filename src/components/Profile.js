@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getCookie } from '../helpers/cookies';
+import Post from './Post';
 import PostForm from './PostForm';
 
 const Profile = ({user, setUser}) => {
@@ -10,8 +11,8 @@ const Profile = ({user, setUser}) => {
     const [posts, setPosts] = useState();
     const [showPostForm, setShowPostForm] = useState(false);
     const [postType, setPostType] = useState();
-    const [updatePostId, setUpdatePostId] = useState();
-    const [postedToggle, setPostedToggle] = useState(false);
+    const [targetPost, setTargetPost] = useState();
+    const [refreshToggle, setRefreshToggle] = useState(false);
 
     // Get Profile on mount & update
     useEffect(() => {
@@ -42,7 +43,7 @@ const Profile = ({user, setUser}) => {
                 });
             });
         });
-    }, [username, postedToggle]);
+    }, [username, refreshToggle]);
 
     const handleRequest = action => {
         let subroute;
@@ -70,13 +71,13 @@ const Profile = ({user, setUser}) => {
 
     const createPost = () => {
         setPostType('create');
-        setUpdatePostId();
+        setTargetPost();
         setShowPostForm(true);
     };
 
     const updatePost = postId => {
         setPostType('update');
-        setUpdatePostId(postId);
+        setTargetPost(postId);
         setShowPostForm(true);
     };
 
@@ -92,7 +93,7 @@ const Profile = ({user, setUser}) => {
         fetch(process.env.REACT_APP_SERVER + 'api/posts/' + postId + '/delete', options)
         .then(function(res) { return res.json(); })
         .then(function(res) {
-            postedToggle ? setPostedToggle(false) : setPostedToggle(true);
+            refreshToggle ? setRefreshToggle(false) : setRefreshToggle(true);
         });
     };
 
@@ -146,11 +147,7 @@ const Profile = ({user, setUser}) => {
                             {posts ?
                                 posts.map(post => {
                                     return (
-                                        <div key={post._id} className="post">
-                                            {post.content}
-                                            <button onClick={() => { updatePost(post._id) }}>Update</button>
-                                            <button onClick={() => { deletePost(post._id) }}>Delete</button>
-                                        </div>
+                                        <Post key={post._id} user={user} post={post} updatePost={updatePost} deletePost={deletePost} />
                                     )
                                 })
                             : null}
@@ -158,8 +155,8 @@ const Profile = ({user, setUser}) => {
                     </div>
                 </section>
                 {showPostForm ?
-                    <PostForm user={user} type={postType} postId={updatePostId} setShowPostForm={setShowPostForm}
-                        postedToggle={postedToggle} setPostedToggle={setPostedToggle} />
+                    <PostForm user={user} type={postType} postId={targetPost} setShowPostForm={setShowPostForm}
+                        refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
                 : null}
             </main>
         : null

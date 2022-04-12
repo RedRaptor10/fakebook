@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getCookie } from '../helpers/cookies';
 
-const PostForm = ({user, type, postId, setShowPostForm, postedToggle, setPostedToggle }) => {
+const PostForm = ({user, type, postId, setShowPostForm, refreshToggle, setRefreshToggle }) => {
     const [form, setForm] = useState({
         content: '',
         image: '',
@@ -27,6 +27,8 @@ const PostForm = ({user, type, postId, setShowPostForm, postedToggle, setPostedT
                     date: res.date,
                     content: res.content,
                     image: res.image,
+                    likes: res.likes,
+                    comments: res.comments,
                     public: res.public
                 });
             });
@@ -60,6 +62,8 @@ const PostForm = ({user, type, postId, setShowPostForm, postedToggle, setPostedT
                 date: form.date ? form.date : new Date(),
                 content: form.content,
                 image: form.image,
+                likes: form.likes ? form.likes : [],
+                comments: form.comments ? form.comments : [],
                 public: form.public
             }),
             mode: 'cors'
@@ -70,8 +74,8 @@ const PostForm = ({user, type, postId, setShowPostForm, postedToggle, setPostedT
         .then(function(res) {
             if (res.errors) { setFormErrors(res.errors); } // Fields required
             else {
-                // Success. Toggle posted state and close form
-                postedToggle ? setPostedToggle(false) : setPostedToggle(true);
+                // Success. Toggle refresh state and close form
+                refreshToggle ? setRefreshToggle(false) : setRefreshToggle(true);
                 setShowPostForm(false);
             }
         });
