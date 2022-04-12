@@ -43,13 +43,12 @@ const Post = ({user, post, updatePost, deletePost}) => {
             {post.content}
             <button onClick={() => { updatePost(post) }}>Update</button>
             <button onClick={() => { deletePost(post) }}>Delete</button>
-            <CommentForm user={user} type={'create'} postId={post._id}
-                refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
+            <CommentForm user={user} post={post} comment={targetComment} refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
             {comments ?
                 <div className="comments">
                     {comments.map(comment => {
                         return (
-                            <Comment key={comment._id} comment={comment} />
+                            <Comment key={comment._id} comment={comment} refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
                         )
                     })}
                 </div>

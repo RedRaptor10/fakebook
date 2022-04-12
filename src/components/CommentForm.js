@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getCookie } from '../helpers/cookies';
 
-const CommentForm = ({user, type, postId, commentId, refreshToggle, setRefreshToggle }) => {
+const CommentForm = ({user, post, comment, refreshToggle, setRefreshToggle }) => {
     const [form, setForm] = useState({ content: '' });
     const [formErrors, setFormErrors] = useState();
 
@@ -14,9 +14,8 @@ const CommentForm = ({user, type, postId, commentId, refreshToggle, setRefreshTo
 
     const submitComment = event => {
         if (event.key === 'Enter') {
-            let route;
-            if (type === 'create') { route = 'api/posts/' + postId + '/comments/create'; }
-            else if (type === 'update') { route = 'api/posts/' + postId + '/' + commentId + '/update'; }
+            let route = 'api/posts/' + post._id + '/comments/create';
+            if (comment) { route = 'api/posts/' + post._id + '/' + comment._id + '/update'; }
 
             let token = getCookie('odinbook_api_token');
 
@@ -31,7 +30,6 @@ const CommentForm = ({user, type, postId, commentId, refreshToggle, setRefreshTo
                     date: form.date ? form.date : new Date(),
                     content: form.content,
                     likes: form.likes ? form.likes : []
-                    //comments: form.comments ? form.comments : []
                 }),
                 mode: 'cors'
             };
@@ -41,23 +39,34 @@ const CommentForm = ({user, type, postId, commentId, refreshToggle, setRefreshTo
             .then(function(res) {
                 if (res.errors) { setFormErrors(res.errors); } // Fields required
                 else {
-                    // Success. Toggle refresh state and close form
-                    refreshToggle ? setRefreshToggle(false) : setRefreshToggle(true);
+                    // Success. Toggle reset form and refresh state
+                    event.target.value = '';
                     setForm({ content: '' });
+                    refreshToggle ? setRefreshToggle(false) : setRefreshToggle(true);
                     //setShowCommentForm(false);
                 }
             });
         }
     };
 
-    /*const updateComment = commentId => {
-        setPostType('update');
-        setTargetPost(postId);
-        setShowPostForm(true);
+    /*const updateComment = comment => {
+        setTargetComment(comment);
+        setShowCommentForm(true);
     };*/
 
     return (
-        <input className="comment-input" type="text" name="content" placeholder="Write a comment..." onChange={handleChange} onKeyDown={submitComment} />
+        <form id="comment-form" action="">
+            <input className="comment-form-input" type="text" name="content" placeholder="Write a comment..." onChange={handleChange} onKeyDown={submitComment} />
+            {formErrors ?
+                <ul id="form-errors">
+                    {formErrors.map((formError, i) => {
+                        return (
+                            <li key={i}>{formError.msg}</li>
+                        )
+                    })}
+                </ul>
+            : null}
+        </form>
     )
 };
 
