@@ -5,12 +5,18 @@ import CommentForm from './CommentForm';
 import { getCookie } from '../helpers/cookies';
 
 const Post = ({user, post, updatePost, deletePost}) => {
+    const [liked, setLiked] = useState();
     const [comments, setComments] = useState();
     const [targetComment, setTargetComment] = useState();
     const [showCommentForm, setShowCommentForm] = useState(false);
     const [refreshToggle, setRefreshToggle] = useState(false);
 
-    // Get Post comments on mount & update
+    // If Post likes array contains User id, set Liked state
+    useEffect(() => {
+        post.likes.includes(user._id) ? setLiked(true) : setLiked(false);
+    }, []);
+
+    // Get Post Comments
     useEffect(() => {
         let token = getCookie('odinbook_api_token');
 
@@ -26,6 +32,22 @@ const Post = ({user, post, updatePost, deletePost}) => {
             setComments(res);
         });
     }, [post, refreshToggle]);
+
+    const likePost = type => {
+        let token = getCookie('odinbook_api_token');
+
+        const options = {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token },
+            mode: 'cors'
+        };
+
+        fetch(process.env.REACT_APP_SERVER + 'api/posts/' + post._id + '/' + type, options)
+        .then(function(res) { return res.json(); })
+        .then(function(res) {
+            liked === true ? setLiked(false) : setLiked(true);
+        });
+    };
 
     return (
         <div className="post">
@@ -44,6 +66,7 @@ const Post = ({user, post, updatePost, deletePost}) => {
             {post.content}
             <button onClick={() => { updatePost(post) }}>Update</button>
             <button onClick={() => { deletePost(post) }}>Delete</button>
+            {liked === true ? <button onClick={() => { likePost('unlike') }}>Unlike</button> : <button onClick={() => { likePost('like') }}>Like</button>}
             <CommentForm user={user} post={post} refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
             {comments ?
                 <div className="comments">
