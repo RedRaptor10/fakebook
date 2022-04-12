@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getCookie } from '../helpers/cookies';
 
-const CommentForm = ({user, post, comment, refreshToggle, setRefreshToggle }) => {
+const CommentForm = ({user, post, comment, setTargetComment, setShowCommentForm, refreshToggle, setRefreshToggle }) => {
     const [form, setForm] = useState({ content: '' });
     const [formErrors, setFormErrors] = useState();
 
@@ -12,10 +12,35 @@ const CommentForm = ({user, post, comment, refreshToggle, setRefreshToggle }) =>
         });
     };
 
+    // If Comment Update, get Comment content
+    useEffect(() => {
+        if (comment) {
+            let token = getCookie('odinbook_api_token');
+
+            const options = {
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + token },
+                mode: 'cors'
+            };
+
+            fetch(process.env.REACT_APP_SERVER + 'api/comments/' + comment._id, options)
+            .then(function(res) { return res.json(); })
+            .then(function(res) {
+                setForm({
+                    date: res.date,
+                    content: res.content,
+                    likes: res.likes
+                });
+            });
+        }
+    }, [comment]);
+
     const submitComment = event => {
         if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent page refresh
+
             let route = 'api/posts/' + post._id + '/comments/create';
-            if (comment) { route = 'api/posts/' + post._id + '/' + comment._id + '/update'; }
+            if (comment) { route = 'api/posts/' + post._id + '/comments/' + comment._id + '/update'; }
 
             let token = getCookie('odinbook_api_token');
 
@@ -39,24 +64,19 @@ const CommentForm = ({user, post, comment, refreshToggle, setRefreshToggle }) =>
             .then(function(res) {
                 if (res.errors) { setFormErrors(res.errors); } // Fields required
                 else {
-                    // Success. Toggle reset form and refresh state
+                    // Success. Reset form and toggle refresh state
                     event.target.value = '';
                     setForm({ content: '' });
                     refreshToggle ? setRefreshToggle(false) : setRefreshToggle(true);
-                    //setShowCommentForm(false);
                 }
             });
         }
     };
 
-    /*const updateComment = comment => {
-        setTargetComment(comment);
-        setShowCommentForm(true);
-    };*/
-
     return (
         <form id="comment-form" action="">
-            <input className="comment-form-input" type="text" name="content" placeholder="Write a comment..." onChange={handleChange} onKeyDown={submitComment} />
+            <input className="comment-form-input" type="text" name="content" placeholder="Write a comment..." value={form.content}
+                onChange={handleChange} onKeyDown={submitComment} />
             {formErrors ?
                 <ul id="form-errors">
                     {formErrors.map((formError, i) => {

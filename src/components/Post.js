@@ -7,6 +7,7 @@ import { getCookie } from '../helpers/cookies';
 const Post = ({user, post, updatePost, deletePost}) => {
     const [comments, setComments] = useState();
     const [targetComment, setTargetComment] = useState();
+    const [showCommentForm, setShowCommentForm] = useState(false);
     const [refreshToggle, setRefreshToggle] = useState(false);
 
     // Get Post comments on mount & update
@@ -24,7 +25,7 @@ const Post = ({user, post, updatePost, deletePost}) => {
         .then(function(res) {
             setComments(res);
         });
-    }, [post._id, refreshToggle]);
+    }, [post, refreshToggle]);
 
     return (
         <div className="post">
@@ -43,12 +44,14 @@ const Post = ({user, post, updatePost, deletePost}) => {
             {post.content}
             <button onClick={() => { updatePost(post) }}>Update</button>
             <button onClick={() => { deletePost(post) }}>Delete</button>
-            <CommentForm user={user} post={post} comment={targetComment} refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
+            <CommentForm user={user} post={post} refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
             {comments ?
                 <div className="comments">
                     {comments.map(comment => {
                         return (
-                            <Comment key={comment._id} comment={comment} refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
+                            <Comment key={comment._id} user={user} post={post} comment={comment} targetComment={targetComment} setTargetComment={setTargetComment}
+                                showCommentForm={showCommentForm} setShowCommentForm={setShowCommentForm}
+                                refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
                         )
                     })}
                 </div>
