@@ -156,7 +156,8 @@ const Profile = ({user, setUser}) => {
                     <aside id="profile-sidebar">
                         <div id="profile-intro">
                             <h3>Intro</h3>
-                            {profile.bio ? profile.bio : <button>Add Bio</button>}
+                            {profile.bio ? profile.bio :
+                                user._id === profile._id ? <button>Add Bio</button> : null}
                         </div>
                         <div id="profile-main-friends">
                             <h3>Friends</h3>
@@ -172,13 +173,15 @@ const Profile = ({user, setUser}) => {
                         </div>
                     </aside>
                     <div id="profile-posts-container">
-                        <div onClick={createPost}>Create Post</div>
+                        {user._id === profile._id ? <div onClick={createPost}>Create Post</div> : null}
                         <h3>Posts</h3>
                         <div id="profile-posts">
                             {posts ?
                                 posts.map(post => {
                                     return (
-                                        <Post key={post._id} user={user} post={post} updatePost={updatePost} deletePost={deletePost} />
+                                        user._id === profile._id || post.public ?
+                                            <Post key={post._id} user={user} post={post} updatePost={updatePost} deletePost={deletePost} />
+                                        : null
                                     )
                                 })
                             : null}

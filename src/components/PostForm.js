@@ -88,7 +88,7 @@ const PostForm = ({user, post, setShowPostForm, refreshToggle, setRefreshToggle 
                     <option value="false">Private</option>
                 </select>
                 <textarea type="textarea" name="content" value={form.content} onChange={handleChange}></textarea>
-                <button type="submit" onClick={submitPost}>Post</button>
+                <button type="submit" onClick={submitPost}>{post ? 'Update' : 'Post'}</button>
                 {formErrors ?
                     <ul id="form-errors">
                         {formErrors.map((formError, i) => {
