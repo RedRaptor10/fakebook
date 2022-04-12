@@ -10,7 +10,6 @@ const Profile = ({user, setUser}) => {
     const [friends, setFriends] = useState();
     const [posts, setPosts] = useState();
     const [showPostForm, setShowPostForm] = useState(false);
-    const [postType, setPostType] = useState();
     const [targetPost, setTargetPost] = useState();
     const [refreshToggle, setRefreshToggle] = useState(false);
 
@@ -70,18 +69,16 @@ const Profile = ({user, setUser}) => {
     };
 
     const createPost = () => {
-        setPostType('create');
         setTargetPost();
         setShowPostForm(true);
     };
 
-    const updatePost = postId => {
-        setPostType('update');
-        setTargetPost(postId);
+    const updatePost = post => {
+        setTargetPost(post);
         setShowPostForm(true);
     };
 
-    const deletePost = postId => {
+    const deletePost = post => {
         let token = getCookie('odinbook_api_token');
 
         const options = {
@@ -90,7 +87,7 @@ const Profile = ({user, setUser}) => {
             mode: 'cors'
         };
 
-        fetch(process.env.REACT_APP_SERVER + 'api/posts/' + postId + '/delete', options)
+        fetch(process.env.REACT_APP_SERVER + 'api/posts/' + post._id + '/delete', options)
         .then(function(res) { return res.json(); })
         .then(function(res) {
             refreshToggle ? setRefreshToggle(false) : setRefreshToggle(true);
@@ -155,7 +152,7 @@ const Profile = ({user, setUser}) => {
                     </div>
                 </section>
                 {showPostForm ?
-                    <PostForm user={user} type={postType} postId={targetPost} setShowPostForm={setShowPostForm}
+                    <PostForm user={user} post={targetPost} setShowPostForm={setShowPostForm}
                         refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
                 : null}
             </main>

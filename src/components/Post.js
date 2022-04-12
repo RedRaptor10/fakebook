@@ -41,8 +41,8 @@ const Post = ({user, post, updatePost, deletePost}) => {
                 </div>
             </div>
             {post.content}
-            <button onClick={() => { updatePost(post._id) }}>Update</button>
-            <button onClick={() => { deletePost(post._id) }}>Delete</button>
+            <button onClick={() => { updatePost(post) }}>Update</button>
+            <button onClick={() => { deletePost(post) }}>Delete</button>
             <CommentForm user={user} type={'create'} postId={post._id}
                 refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
             {comments ?

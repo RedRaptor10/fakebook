@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getCookie } from '../helpers/cookies';
 
-const PostForm = ({user, type, postId, setShowPostForm, refreshToggle, setRefreshToggle }) => {
+const PostForm = ({user, post, setShowPostForm, refreshToggle, setRefreshToggle }) => {
     const [form, setForm] = useState({
         content: '',
         image: '',
@@ -11,7 +11,7 @@ const PostForm = ({user, type, postId, setShowPostForm, refreshToggle, setRefres
 
     // If Post Update, get Post content
     useEffect(() => {
-        if (type === 'update') {
+        if (post) {
             let token = getCookie('odinbook_api_token');
 
             const options = {
@@ -20,7 +20,7 @@ const PostForm = ({user, type, postId, setShowPostForm, refreshToggle, setRefres
                 mode: 'cors'
             };
 
-            fetch(process.env.REACT_APP_SERVER + 'api/posts/' + postId, options)
+            fetch(process.env.REACT_APP_SERVER + 'api/posts/' + post._id, options)
             .then(function(res) { return res.json(); })
             .then(function(res) {
                 setForm({
@@ -28,12 +28,11 @@ const PostForm = ({user, type, postId, setShowPostForm, refreshToggle, setRefres
                     content: res.content,
                     image: res.image,
                     likes: res.likes,
-                    comments: res.comments,
                     public: res.public
                 });
             });
         }
-    }, [type, postId]);
+    }, [post]);
 
     const handleChange = event => {
         setForm({
@@ -45,9 +44,8 @@ const PostForm = ({user, type, postId, setShowPostForm, refreshToggle, setRefres
     const submitPost = event => {
         event.preventDefault();
 
-        let route;
-        if (type === 'create') { route = 'api/posts/create'; }
-        else if (type === 'update') { route = 'api/posts/' + postId + '/update'; }
+        let route = 'api/posts/create';
+        if (post) { route = 'api/posts/' + post._id + '/update'; }
 
         let token = getCookie('odinbook_api_token');
 
@@ -63,7 +61,6 @@ const PostForm = ({user, type, postId, setShowPostForm, refreshToggle, setRefres
                 content: form.content,
                 image: form.image,
                 likes: form.likes ? form.likes : [],
-                comments: form.comments ? form.comments : [],
                 public: form.public
             }),
             mode: 'cors'
@@ -85,7 +82,7 @@ const PostForm = ({user, type, postId, setShowPostForm, refreshToggle, setRefres
         <div id="post-form-container">
             <div className="overlay" onClick={() => { setShowPostForm(false) }}></div>
             <form id="post-form" action="">
-                <h1>{type === 'create' ? 'Create Post' : 'Update Post'}</h1>
+                <h1>{!post ? 'Create Post' : 'Update Post'}</h1>
                 <select name="public" value={form.public} onChange={handleChange}>
                     <option value="true">Public</option>
                     <option value="false">Private</option>
