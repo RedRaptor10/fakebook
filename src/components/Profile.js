@@ -6,6 +6,7 @@ import PostForm from './PostForm';
 
 const Profile = ({user, setUser}) => {
     const { username } = useParams(); // Get profile username from url
+    const [userId, setUserId] = useState();
     const [profile, setProfile] = useState();
     const [friends, setFriends] = useState();
     const [posts, setPosts] = useState();
@@ -13,7 +14,7 @@ const Profile = ({user, setUser}) => {
     const [targetPost, setTargetPost] = useState();
     const [refreshToggle, setRefreshToggle] = useState(false);
 
-    // Get Profile on mount & update
+    // Get Profile
     useEffect(() => {
         let token = getCookie('odinbook_api_token');
 
@@ -24,25 +25,58 @@ const Profile = ({user, setUser}) => {
         };
 
         fetch(process.env.REACT_APP_SERVER + 'api/users/' + username, options)
-        .then(function(res) { return res.json(); })
         .then(function(res) {
+            return res.json();
+        })
+        .then(function(res) {
+            if (!res) { throw new Error('User not found'); }
+            setUserId(res._id);
             setProfile(res);
+        })
+        .catch(err => { console.log(err); });
+    }, [username]);
 
-            // Get Posts
-            fetch(process.env.REACT_APP_SERVER + 'api/posts/users/' + res._id, options)
-            .then(function(res) { return res.json(); })
+    // Get Friends
+    useEffect(() => {
+        if (profile) {
+            let token = getCookie('odinbook_api_token');
+
+            const options = {
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + token },
+                mode: 'cors'
+            };
+
+            fetch(process.env.REACT_APP_SERVER + 'api/users/' + username + '/get-friends', options)
+            .then(function(res) {
+                return res.json();
+            })
+            .then(function(res) {
+                setFriends(res);
+            });
+        }
+    }, [profile, username]);
+
+    // Get Posts
+    useEffect(() => {
+        if (userId) {
+            let token = getCookie('odinbook_api_token');
+
+            const options = {
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + token },
+                mode: 'cors'
+            };
+
+            fetch(process.env.REACT_APP_SERVER + 'api/posts/users/' + userId, options)
+            .then(function(res) {
+                return res.json();
+            })
             .then(function(res) {
                 setPosts(res);
-
-                // Get Friends
-                fetch(process.env.REACT_APP_SERVER + 'api/users/' + username + '/get-friends', options)
-                .then(function(res) { return res.json(); })
-                .then(function(res) {
-                    setFriends(res);
-                });
             });
-        });
-    }, [username, refreshToggle]);
+        }
+    }, [userId, refreshToggle]);
 
     const handleRequest = action => {
         let subroute;
