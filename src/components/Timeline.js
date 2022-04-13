@@ -19,7 +19,7 @@ const Timeline = ({user}) => {
             mode: 'cors'
         };
 
-        fetch(process.env.REACT_APP_SERVER + 'api/posts/timeline/' + user._id, options)
+        fetch(process.env.REACT_APP_SERVER + 'api/posts/timeline/' + user._id + '?sort=date&order=desc', options)
         .then(function(res) {
             return res.json();
         })
