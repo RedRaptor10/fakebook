@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getCookie } from '../helpers/cookies';
 
-const CommentForm = ({user, post, comment, setTargetComment, setShowCommentForm, refreshToggle, setRefreshToggle }) => {
+const CommentForm = ({user, post, comment, refreshToggle, setRefreshToggle }) => {
     const [form, setForm] = useState({ content: '' });
     const [formErrors, setFormErrors] = useState();
 
@@ -74,9 +74,9 @@ const CommentForm = ({user, post, comment, setTargetComment, setShowCommentForm,
     };
 
     return (
-        <form id="comment-form" action="">
-            <input className="comment-form-input" type="text" name="content" placeholder="Write a comment..." value={form.content}
-                onChange={handleChange} onKeyDown={submitComment} />
+        <form className="comment-form" action="">
+            <input id={!comment ? 'comment-form-input' : null} className="comment-form-input" type="text" name="content"
+                placeholder="Write a comment..." value={form.content} onChange={handleChange} onKeyDown={submitComment} />
             {formErrors ?
                 <ul id="form-errors">
                     {formErrors.map((formError, i) => {

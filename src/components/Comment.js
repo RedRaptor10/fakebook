@@ -8,7 +8,7 @@ const Comment = ({user, post, comment, targetComment, setTargetComment, showComm
     // If Comment likes array contains User id, set Liked state
     useEffect(() => {
         comment.likes.includes(user._id) ? setLiked(true) : setLiked(false);
-    }, []);
+    }, [comment.likes, user._id]);
 
     const updateComment = () => {
         setTargetComment(comment);

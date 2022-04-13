@@ -14,7 +14,7 @@ const Post = ({user, post, updatePost, deletePost}) => {
     // If Post likes array contains User id, set Liked state
     useEffect(() => {
         post.likes.includes(user._id) ? setLiked(true) : setLiked(false);
-    }, []);
+    }, [post.likes, user._id]);
 
     // Get Post Comments
     useEffect(() => {
@@ -64,10 +64,11 @@ const Post = ({user, post, updatePost, deletePost}) => {
                 </div>
             </div>
             {post.content}
-            {post.author && user._id === post.author._id ?
+            {user._id === post.author._id ?
                 <div>
                     <button onClick={() => { updatePost(post) }}>Update</button>
                     <button onClick={() => { deletePost(post) }}>Delete</button>
+                    <button onClick={() => { document.getElementById('comment-form-input').focus() }}>Comment</button>
                 </div>
             :
                 <div>
@@ -76,6 +77,7 @@ const Post = ({user, post, updatePost, deletePost}) => {
                     :
                         <button onClick={() => { likePost('like') }}>Like</button>
                     }
+                    <button onClick={() => { document.getElementById('comment-form-input').focus() }}>Comment</button>
                 </div>}
             <CommentForm user={user} post={post} refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
             {comments ?
