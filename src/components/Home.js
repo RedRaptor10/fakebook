@@ -7,7 +7,7 @@ const Home = ({user}) => {
         <main id="home">
             <Sidebar user={user} />
             <Timeline user={user} />
-            <Contacts />
+            <Contacts user={user} />
         </main>
     );
 };
