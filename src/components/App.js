@@ -4,6 +4,7 @@ import Header from './Header';
 import LogInForm from './LogInForm';
 import Home from './Home';
 import Profile from './Profile';
+import Users from './Users';
 import Requests from './Requests';
 import { getCookie, deleteCookie } from '../helpers/cookies';
 
@@ -58,6 +59,9 @@ const App = () => {
               user ? <Home user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />} />
             <Route exact path="/:username" element={
               user ? <Profile user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />
+            } />
+            <Route exact path="/users" element={
+              user ? <Users user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />
             } />
             <Route exact path="/friends/requests" element={
               user ? <Requests user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />

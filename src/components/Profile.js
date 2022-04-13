@@ -84,7 +84,9 @@ const Profile = ({user, setUser}) => {
         let subroute;
         if (action === 'delete') { subroute = '/delete-friend' }
         else if (action === 'send') { subroute = '/send-request' }
+        else if (action === 'add') { subroute = '/add-friend' }
         else if (action === 'deleteSent') { subroute = '/delete-request/sent' }
+        else if (action === 'deleteReceived') { subroute = '/delete-request/received' }
 
         let token = getCookie('odinbook_api_token');
 
@@ -145,6 +147,12 @@ const Profile = ({user, setUser}) => {
                     :
                         profile.friends.includes(user._id) ? <button onClick={() => { handleRequest('delete') }}>Delete Friend</button> :
                             profile.requests.received.includes(user._id) ? <button onClick={() => { handleRequest('deleteSent') }}>Cancel Friend Request</button> :
+                                profile.requests.sent.includes(user._id) ?
+                                <div>
+                                    <button onClick={() => { handleRequest('add') }}>Accept Request</button>
+                                    <button onClick={() => { handleRequest('deleteReceived') }}>Delete Request</button>
+                                </div>
+                            :
                                 <button onClick={() => { handleRequest('send') }}>Add Friend</button>}
                 </section>
                 <nav id="profile-nav">
