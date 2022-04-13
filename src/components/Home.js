@@ -6,7 +6,7 @@ const Home = ({user}) => {
     return (
         <main id="home">
             <Sidebar user={user} />
-            <Timeline />
+            <Timeline user={user} />
             <Contacts />
         </main>
     );
