@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
 import { getCookie } from '../helpers/cookies';
+import getElapsedTime from '../helpers/getElapsedTime';
 
 const Post = ({user, post, updatePost, deletePost}) => {
     const [liked, setLiked] = useState();
@@ -58,7 +59,7 @@ const Post = ({user, post, updatePost, deletePost}) => {
                         <Link to={'/' + post.author.username}>{post.author.firstName + ' ' + post.author.lastName}</Link>
                     </div>
                     <div>
-                        <div className="post-date">{post.date}</div>
+                        <div className="post-date">{getElapsedTime(new Date(post.date))}</div>
                         <div className="post-public">{post.public ? 'Public' : 'Private'}</div>
                     </div>
                 </div>
