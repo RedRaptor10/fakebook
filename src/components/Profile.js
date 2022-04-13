@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getCookie } from '../helpers/cookies';
+import ProfileForm from './ProfileForm';
 import Post from './Post';
 import PostForm from './PostForm';
 
@@ -8,6 +9,7 @@ const Profile = ({user, setUser}) => {
     const { username } = useParams(); // Get profile username from url
     const [userId, setUserId] = useState();
     const [profile, setProfile] = useState();
+    const [showProfileForm, setShowProfileForm] = useState();
     const [friends, setFriends] = useState();
     const [posts, setPosts] = useState();
     const [showPostForm, setShowPostForm] = useState(false);
@@ -68,7 +70,7 @@ const Profile = ({user, setUser}) => {
                 mode: 'cors'
             };
 
-            fetch(process.env.REACT_APP_SERVER + 'api/posts/users/' + userId, options)
+            fetch(process.env.REACT_APP_SERVER + 'api/posts/users/' + userId + '?sort=date&order=desc', options)
             .then(function(res) {
                 return res.json();
             })
@@ -139,7 +141,7 @@ const Profile = ({user, setUser}) => {
                     <h1>{profile.firstName + ' ' + profile.lastName}</h1>
                     <h3>{profile.friends.length + (profile.friends.length === 1 ? ' Friend' : ' Friends')}</h3>
                     {user._id === profile._id ?
-                        <button>Edit profile</button>
+                        <button onClick={() => { setShowProfileForm(true) }}>Edit profile</button>
                     :
                         profile.friends.includes(user._id) ? <button onClick={() => { handleRequest('delete') }}>Delete Friend</button> :
                             profile.requests.received.includes(user._id) ? <button onClick={() => { handleRequest('deleteSent') }}>Cancel Friend Request</button> :
@@ -188,6 +190,9 @@ const Profile = ({user, setUser}) => {
                         </div>
                     </div>
                 </section>
+                {showProfileForm ?
+                    <ProfileForm user={user} setUser={setUser} profile={profile} setShowProfileForm={setShowProfileForm} />
+                : null}
                 {showPostForm ?
                     <PostForm user={user} post={targetPost} setShowPostForm={setShowPostForm}
                         refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
