@@ -64,9 +64,19 @@ const Post = ({user, post, updatePost, deletePost}) => {
                 </div>
             </div>
             {post.content}
-            <button onClick={() => { updatePost(post) }}>Update</button>
-            <button onClick={() => { deletePost(post) }}>Delete</button>
-            {liked === true ? <button onClick={() => { likePost('unlike') }}>Unlike</button> : <button onClick={() => { likePost('like') }}>Like</button>}
+            {post.author && user._id === post.author._id ?
+                <div>
+                    <button onClick={() => { updatePost(post) }}>Update</button>
+                    <button onClick={() => { deletePost(post) }}>Delete</button>
+                </div>
+            :
+                <div>
+                    {liked === true ?
+                        <button onClick={() => { likePost('unlike') }}>Unlike</button>
+                    :
+                        <button onClick={() => { likePost('like') }}>Like</button>
+                    }
+                </div>}
             <CommentForm user={user} post={post} refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
             {comments ?
                 <div className="comments">
