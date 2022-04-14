@@ -141,9 +141,9 @@ const Profile = ({user, setUser}) => {
                     <div id="cover"></div>
                 </section>
                 <section id="profile-info">
-                    <div id="profile-pic">
-                        {profile.pic ?
-                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + profile._id + "/" + profile.pic} />
+                    <div id="profile-photo">
+                        {profile.photo ?
+                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + profile._id + "/" + profile.photo} />
                         : null}
                         {user._id === profile._id ?
                             <button onClick={() => { setShowPhotoForm(true) }}>Edit photo</button>
