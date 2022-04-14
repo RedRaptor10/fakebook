@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getCookie } from '../helpers/cookies';
+import PhotoForm from './PhotoForm';
 import ProfileForm from './ProfileForm';
 import Post from './Post';
 import PostForm from './PostForm';
@@ -9,9 +10,10 @@ const Profile = ({user, setUser}) => {
     const { username } = useParams(); // Get profile username from url
     const [userId, setUserId] = useState();
     const [profile, setProfile] = useState();
-    const [showProfileForm, setShowProfileForm] = useState();
     const [friends, setFriends] = useState();
     const [posts, setPosts] = useState();
+    const [showPhotoForm, setShowPhotoForm] = useState();
+    const [showProfileForm, setShowProfileForm] = useState();
     const [showPostForm, setShowPostForm] = useState(false);
     const [targetPost, setTargetPost] = useState();
     const [refreshToggle, setRefreshToggle] = useState(false);
@@ -36,7 +38,7 @@ const Profile = ({user, setUser}) => {
             setProfile(res);
         })
         .catch(err => { console.log(err); });
-    }, [username]);
+    }, [user, username]);
 
     // Get Friends
     useEffect(() => {
@@ -139,7 +141,14 @@ const Profile = ({user, setUser}) => {
                     <div id="cover"></div>
                 </section>
                 <section id="profile-info">
-                    <div id="profile-pic"></div>
+                    <div id="profile-pic">
+                        {profile.pic ?
+                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + profile._id + "/" + profile.pic} />
+                        : null}
+                        {user._id === profile._id ?
+                            <button onClick={() => { setShowPhotoForm(true) }}>Edit photo</button>
+                        : null}
+                    </div>
                     <h1>{profile.firstName + ' ' + profile.lastName}</h1>
                     <h3>{profile.friends.length + (profile.friends.length === 1 ? ' Friend' : ' Friends')}</h3>
                     {user._id === profile._id ?
@@ -164,12 +173,7 @@ const Profile = ({user, setUser}) => {
                 </nav>
                 <section id="profile-main">
                     <aside id="profile-sidebar">
-                        <div id="profile-intro">
-                            <h3>Intro</h3>
-                            {profile.bio ? profile.bio :
-                                user._id === profile._id ? <button>Add Bio</button> : null}
-                        </div>
-                        <div id="profile-main-friends">
+                        <div id="profile-friends">
                             <h3>Friends</h3>
                             {friends ?
                                 friends.map(friend => {
@@ -198,6 +202,9 @@ const Profile = ({user, setUser}) => {
                         </div>
                     </div>
                 </section>
+                {showPhotoForm ?
+                    <PhotoForm user={user} setUser={setUser} setShowPhotoForm={setShowPhotoForm} />
+                : null}
                 {showProfileForm ?
                     <ProfileForm user={user} setUser={setUser} profile={profile} setShowProfileForm={setShowProfileForm} />
                 : null}
