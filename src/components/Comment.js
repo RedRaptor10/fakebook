@@ -3,12 +3,7 @@ import CommentForm from './CommentForm';
 import { getCookie } from '../helpers/cookies';
 
 const Comment = ({user, post, comment, targetComment, setTargetComment, showCommentForm, setShowCommentForm, refreshToggle, setRefreshToggle}) => {
-    const [liked, setLiked] = useState();
-
-    // If Comment likes array contains User id, set Liked state
-    useEffect(() => {
-        comment.likes.includes(user._id) ? setLiked(true) : setLiked(false);
-    }, [comment.likes, user._id]);
+    const [likes, setLikes] = useState(comment.likes);
 
     const updateComment = () => {
         setTargetComment(comment);
@@ -48,7 +43,16 @@ const Comment = ({user, post, comment, targetComment, setTargetComment, showComm
         fetch(process.env.REACT_APP_SERVER + 'api/posts/' + post._id + '/comments/' + comment._id + '/' + type, options)
         .then(function(res) { return res.json(); })
         .then(function(res) {
-            liked === true ? setLiked(false) : setLiked(true);
+            // Update Likes state
+            if (type === 'like') {
+                const temp = likes.slice();
+                temp.push(user._id);
+                setLikes(temp);
+            } else if (type === 'unlike') {
+                const temp = likes.slice();
+                temp.splice(temp.indexOf(user._id), 1);
+                setLikes(temp);
+            }
         });
     };
 
@@ -63,6 +67,8 @@ const Comment = ({user, post, comment, targetComment, setTargetComment, showComm
             :
                 <div>
                     {comment.content}
+                    {likes.length > 0 ? likes.length +
+                        (likes.length === 1 ? ' Like' : ' Likes') : null}
                     {comment.author && user._id === comment.author._id ?
                         <div>
                             <button onClick={updateComment}>Edit</button>
@@ -70,7 +76,7 @@ const Comment = ({user, post, comment, targetComment, setTargetComment, showComm
                         </div>
                     :
                         <div>
-                            {liked === true ?
+                            {likes.includes(user._id) ?
                                 <button onClick={() => { likeComment('unlike') }}>Unlike</button>
                             :
                                 <button onClick={() => { likeComment('like') }}>Like</button>}

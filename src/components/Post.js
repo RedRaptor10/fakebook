@@ -6,16 +6,11 @@ import { getCookie } from '../helpers/cookies';
 import getElapsedTime from '../helpers/getElapsedTime';
 
 const Post = ({user, post, updatePost, deletePost}) => {
-    const [liked, setLiked] = useState();
+    const [likes, setLikes] = useState(post.likes);
     const [comments, setComments] = useState();
     const [targetComment, setTargetComment] = useState();
     const [showCommentForm, setShowCommentForm] = useState(false);
     const [refreshToggle, setRefreshToggle] = useState(false);
-
-    // If Post likes array contains User id, set Liked state
-    useEffect(() => {
-        post.likes.includes(user._id) ? setLiked(true) : setLiked(false);
-    }, [post.likes, user._id]);
 
     // Get Post Comments
     useEffect(() => {
@@ -46,14 +41,23 @@ const Post = ({user, post, updatePost, deletePost}) => {
         fetch(process.env.REACT_APP_SERVER + 'api/posts/' + post._id + '/' + type, options)
         .then(function(res) { return res.json(); })
         .then(function(res) {
-            liked === true ? setLiked(false) : setLiked(true);
+            // Update Likes state
+            if (type === 'like') {
+                const temp = likes.slice();
+                temp.push(user._id);
+                setLikes(temp);
+            } else if (type === 'unlike') {
+                const temp = likes.slice();
+                temp.splice(temp.indexOf(user._id), 1);
+                setLikes(temp);
+            }
         });
     };
 
     return (
         <div className="post">
             <div className="post-meta">
-                {post.author.pic ? <div className="post-pic" /> : <div className="post-pic" />}
+                {post.author.photo ? <div className="post-photo" /> : <div className="post-photo" />}
                 <div className="post-meta-info">
                     <div className="post-author">
                         <Link to={'/' + post.author.username}>{post.author.firstName + ' ' + post.author.lastName}</Link>
@@ -65,6 +69,8 @@ const Post = ({user, post, updatePost, deletePost}) => {
                 </div>
             </div>
             {post.content}
+            {likes.length > 0 ? likes.length +
+                (likes.length === 1 ? ' Like' : ' Likes') : null}
             {user._id === post.author._id ?
                 <div>
                     <button onClick={() => { updatePost(post) }}>Update</button>
@@ -73,7 +79,7 @@ const Post = ({user, post, updatePost, deletePost}) => {
                 </div>
             :
                 <div>
-                    {liked === true ?
+                    {likes.includes(user._id) ?
                         <button onClick={() => { likePost('unlike') }}>Unlike</button>
                     :
                         <button onClick={() => { likePost('like') }}>Like</button>
