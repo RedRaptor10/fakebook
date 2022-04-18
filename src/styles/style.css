@@ -316,20 +316,57 @@ main {
     min-height: 90vh;
 }
 
-#sidebar {
+/* Sidebar / Contacts */
+#sidebar, #contacts {
     background: rgb(240, 245, 245);
     width: 25%;
     height: 100%;
+    box-sizing: border-box;
+}
+
+#contacts h3 {
+  padding: 16px 32px;
+}
+
+#sidebar a, #contacts a {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 16px 32px;
+  color: #000;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+#sidebar a:hover, #contacts a:hover {
+  text-decoration: none;
+}
+
+#sidebar li, #contacts li {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  max-height: 64px;
+}
+
+#sidebar li:hover, #contacts li:hover {
+  background: rgb(224, 224, 224);
+}
+
+#sidebar li:first-child *, #contacts li * {
+  display: flex;
+  align-items: center;
+}
+
+#sidebar .profile-photo, #contacts .profile-photo {
+  width: 32px;
+  height: auto;
+  margin-right: 8px;
 }
 
 #timeline {
     width: 50%;
-    height: 100%;
-}
-
-#contacts {
-    background: rgb(240, 245, 245);
-    width: 25%;
     height: 100%;
 }
 
