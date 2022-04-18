@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Header from './Header';
+import Footer from './Footer';
 import LogInForm from './LogInForm';
 import Home from './Home';
 import Profile from './Profile';
@@ -67,6 +68,7 @@ const App = () => {
               user ? <Requests user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />
             } />
           </Routes>
+          <Footer />
         </HashRouter>
       : null
   );
