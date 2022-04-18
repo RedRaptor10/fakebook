@@ -18,8 +18,16 @@ const Header = ({user, setUser}) => {
             <h1>
                 <Link to="/">odinbook</Link>
             </h1>
-            <div>
-                <Link to={'/' + user.username}>{user.firstName}</Link>
+            <div id="header-items">
+                <Link to={'/' + user.username}>
+                    {user.photo ?
+                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + user._id + "/" + user.photo}
+                            alt={user.firstName + ' ' + user.lastName} />
+                    :
+                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
+                            alt={user.firstName + ' ' + user.lastName} />}
+                </Link>
+                <Link to={'/' + user.username} id="header-name">{user.firstName}</Link>
                 <button onClick={logOut}>Log Out</button>
             </div>
         </header>
