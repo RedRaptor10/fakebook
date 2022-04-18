@@ -43,31 +43,35 @@ const LogInForm = ({setUser}) => {
     };
 
     return (
-        <div>
-            <div>
-                <h1>odinbook</h1>
-                <h3>Connect with friends and the world around you on Odinbook.</h3>
+        <main id="log-in-page">
+            <div id="log-in-form-container">
+                <div id="log-in-form-left">
+                    <h1>odinbook</h1>
+                    <h2>Connect with friends and the world around you on Odinbook.</h2>
+                </div>
+                <div id="log-in-form-right">
+                    <form id="log-in-form" action ="">
+                        {logInErrors.length !== 0 ?
+                            <ul id="form-errors">
+                                {logInErrors.map((logInError, i) => {
+                                    return(
+                                        <li key={i}>{logInError.msg}</li>
+                                    )
+                                })}
+                            </ul>
+                        : null}
+                        <input type="text" name="email" placeholder="Email" onChange={handleLogInChange}></input>
+                        <input type="password" name="password" placeholder="Password" onChange={handleLogInChange}></input>
+                        <button className="btn btn-blue" type="submit" name="submit" onClick={submitLogIn}>Log In</button>
+                        <button className="btn btn-green" type="button" name="create" onClick={() => { setShowSignUpForm(true); }}>Create new account</button>
+                    </form>
+                </div>
             </div>
-            <form id="log-in-form" action ="">
-                <input type="text" name="email" placeholder="Email" onChange={handleLogInChange}></input>
-                <input type="password" name="password" placeholder="Password" onChange={handleLogInChange}></input>
-                <button type="submit" name="submit" onClick={submitLogIn}>Log In</button>
-                {logInErrors.length !== 0 ?
-                    <ul id="form-errors">
-                        {logInErrors.map((logInError, i) => {
-                            return(
-                                <li key={i}>{logInError.msg}</li>
-                            )
-                        })}
-                    </ul>
-                : null}
-                <button type="button" name="create" onClick={() => { setShowSignUpForm(true); }}>Create new account</button>
-            </form>
 
             {showSignUpForm ?
                 <SignUpForm setShowSignUpForm={setShowSignUpForm} />
             : null}
-        </div>
+        </main>
     );
 };
 

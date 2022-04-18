@@ -1,0 +1,257 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* End Reset */
+
+:root {
+  --primary-color: #1877f2;
+  --background-color: #fff;
+  --color: #1c1e21;
+  --link-color: #8a8d91;
+}
+
+body {
+  background: var(--background-color);
+  color: var(--color);
+  font-family: 'Helvetica', 'Trebuchet MS', 'Arial', 'sans-serif';
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font: revert;
+}
+
+i, em {
+  font-style: italic;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.btn {
+  padding: 8px 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: 0.1s;
+}
+
+.btn-blue {
+  background-color: #1877f2;
+}
+
+.btn-blue:hover {
+  background-color: #166fe5;
+}
+
+.btn-green {
+  background-color: #42b72a;
+}
+
+.btn-green:hover {
+  background-color: #36a420;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    height: 10vh;
+    padding: 0 32px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Footer */
+footer {
+  display: flex;
+  justify-content: center;
+  height: 25vh;
+}
+
+#footer-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  padding: 32px 0;
+  color: #737373;
+  line-height: 24px;
+}
+
+/* Log-in Form */
+#log-in-form-container {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  margin: 64px auto;
+}
+
+#log-in-form-left {
+  width: 50%;
+  margin: 64px auto;
+  box-sizing: border-box;
+}
+
+#log-in-form-left h1 {
+  margin-bottom: 16px;
+  color: var(--primary-color);
+  font-size: 64px;
+}
+
+#log-in-form-left h2 {
+  font-weight: normal;
+}
+
+#log-in-form-right {
+  width: 50%;
+  margin: 64px auto;
+  box-sizing: border-box;
+}
+
+#log-in-form {
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#log-in-form input {
+  display: block;
+  width: 100%;
+  height: 48px;
+  margin: 8px auto;
+  padding: 16px;
+  font-size: 16px;
+  color: rgb(128, 128, 128);
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+#log-in-form button {
+  width: 100%;
+  margin: 4px 0;
+}
+
+#form-errors {
+  background-color: #ffebe8;
+  margin: 8px 0;
+  padding: 8px;
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid #dd3c10;
+}
+
+/* Main */
+main {
+    display: flex;
+    background: #f0f2f5;
+    min-height: 90vh;
+}
+
+#sidebar {
+    background: rgb(240, 245, 245);
+    width: 25%;
+    height: 100%;
+}
+
+#timeline {
+    width: 50%;
+    height: 100%;
+}
+
+#contacts {
+    background: rgb(240, 245, 245);
+    width: 25%;
+    height: 100%;
+}
+
+.profile-photo {
+  width: 150px;
+  height: auto;
+}
+
+/* Forms */
+#photo-form-container, #profile-form-container, #post-form-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.overlay {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+
+#photo-form, #post-form {
+  position: relative;
+  background: rgb(64, 64, 64);
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
