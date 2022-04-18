@@ -63,7 +63,10 @@ const LogInForm = ({setUser}) => {
                         <input type="text" name="email" placeholder="Email" onChange={handleLogInChange}></input>
                         <input type="password" name="password" placeholder="Password" onChange={handleLogInChange}></input>
                         <button className="btn btn-blue" type="submit" name="submit" onClick={submitLogIn}>Log In</button>
-                        <button className="btn btn-green" type="button" name="create" onClick={() => { setShowSignUpForm(true); }}>Create new account</button>
+                        <button className="btn btn-green" type="button" name="create" onClick={() => {
+                            document.body.classList.add('disable-scroll');
+                            setShowSignUpForm(true);
+                        }}>Create new account</button>
                     </form>
                 </div>
             </div>
