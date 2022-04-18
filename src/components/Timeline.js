@@ -56,7 +56,15 @@ const Timeline = ({user}) => {
 
     return (
         <div id="timeline">
-            <div onClick={createPost}>Create Post</div>
+            <div id="create-post-container">
+                {user.photo ?
+                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + user._id + "/" + user.photo}
+                    alt={user.firstName + ' ' + user.lastName} />
+                :
+                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
+                        alt={user.firstName + ' ' + user.lastName} />}
+                <div id="create-post-btn" onClick={createPost}>What's on your mind, {user.firstName}?</div>
+            </div>
             <div id="profile-posts">
                 {posts ?
                     posts.map(post => {

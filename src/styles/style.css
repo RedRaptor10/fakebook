@@ -316,6 +316,16 @@ main {
     min-height: 90vh;
 }
 
+.profile-photo {
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+#profile .profile-photo {
+  width: 150px;
+  height: auto;
+}
+
 /* Sidebar / Contacts */
 #sidebar, #contacts {
     background: rgb(240, 245, 245);
@@ -325,7 +335,12 @@ main {
 }
 
 #contacts h3 {
-  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 32px;
+  cursor: default;
+  user-select: none;
 }
 
 #sidebar a, #contacts a {
@@ -365,19 +380,38 @@ main {
   margin-right: 8px;
 }
 
+/* Timeline */
 #timeline {
     width: 50%;
     height: 100%;
+    padding: 32px;
+    box-sizing: border-box;
 }
 
-.profile-photo {
-  object-fit: cover;
-  border-radius: 50%;
+#timeline #create-post-container {
+  display: flex;
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#profile .profile-photo {
-  width: 150px;
+#timeline #create-post-container .profile-photo {
+  width: 48px;
   height: auto;
+  margin-right: 16px;
+}
+
+#timeline #create-post-container #create-post-btn {
+  display: flex;
+  align-items: center;
+  background: rgb(240, 245, 245);
+  width: 100%;
+  height: 48px;
+  border-radius: 16px;
+  padding: 0 8px;
+  color: rgb(128, 128, 128);
+  cursor: pointer;
 }
 
 /* Forms */
