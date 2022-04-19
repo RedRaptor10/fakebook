@@ -55,36 +55,42 @@ const Post = ({user, post, updatePost, deletePost}) => {
     };
 
     return (
-        <div className="post">
+        <div id={'post-' + post._id} className="post">
             <div className="post-meta">
-                {post.author.photo ? <div className="post-photo" /> : <div className="post-photo" />}
-                <div className="post-meta-info">
+                {post.author.photo ?
+                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + post.author._id + "/" + post.author.photo}
+                        alt={post.author.firstName + ' ' + post.author.lastName} />
+                :
+                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
+                        alt={post.author.firstName + ' ' + post.author.lastName} />}
+                <div>
                     <div className="post-author">
                         <Link to={'/' + post.author.username}>{post.author.firstName + ' ' + post.author.lastName}</Link>
                     </div>
-                    <div>
-                        <div className="post-date">{getElapsedTime(new Date(post.date))}</div>
-                        <div className="post-public">{post.public ? 'Public' : 'Private'}</div>
+                    <div className="post-date-public">
+                        <span className="post-date">{getElapsedTime(new Date(post.date))}</span>
+                        <span className="post-public">{post.public ? 'Public' : 'Private'}</span>
                     </div>
                 </div>
             </div>
-            {post.content}
-            {likes.length > 0 ? likes.length +
-                (likes.length === 1 ? ' Like' : ' Likes') : null}
+            <div className="post-content">{post.content}</div>
+            {likes.length > 0 ?
+                <div className="post-likes">{likes.length + (likes.length === 1 ? ' Like' : ' Likes')}</div>
+            : null}
             {user._id === post.author._id ?
-                <div>
-                    <button onClick={() => { updatePost(post) }}>Update</button>
+                <div className="post-btns">
+                    <button onClick={() => { document.getElementById('post-' + post._id).querySelector('.comment-form-input').focus() }}>Comment</button>
+                    <button onClick={() => { updatePost(post) }}>Edit</button>
                     <button onClick={() => { deletePost(post) }}>Delete</button>
-                    <button onClick={() => { document.getElementById('comment-form-input').focus() }}>Comment</button>
                 </div>
             :
-                <div>
+                <div className="post-btns">
                     {likes.includes(user._id) ?
                         <button onClick={() => { likePost('unlike') }}>Unlike</button>
                     :
                         <button onClick={() => { likePost('like') }}>Like</button>
                     }
-                    <button onClick={() => { document.getElementById('comment-form-input').focus() }}>Comment</button>
+                    <button onClick={() => { document.getElementById('post-' + post._id).querySelector('.comment-form-input').focus() }}>Comment</button>
                 </div>}
             <CommentForm user={user} post={post} refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
             {comments ?

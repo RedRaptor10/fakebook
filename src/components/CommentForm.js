@@ -75,7 +75,13 @@ const CommentForm = ({user, post, comment, refreshToggle, setRefreshToggle }) =>
 
     return (
         <form className="comment-form" action="">
-            <input id={!comment ? 'comment-form-input' : null} className="comment-form-input" type="text" name="content"
+            {user.photo ?
+                <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + user._id + "/" + user.photo}
+                alt={user.firstName + ' ' + user.lastName} />
+            :
+                <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
+                    alt={user.firstName + ' ' + user.lastName} />}
+            <input className="comment-form-input" type="text" name="content"
                 placeholder="Write a comment..." value={form.content} onChange={handleChange} onKeyDown={submitComment} />
             {formErrors ?
                 <ul id="form-errors">

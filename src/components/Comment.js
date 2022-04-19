@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import CommentForm from './CommentForm';
 import { getCookie } from '../helpers/cookies';
 
@@ -57,30 +58,49 @@ const Comment = ({user, post, comment, targetComment, setTargetComment, showComm
     };
 
     return (
-        <div>
+        <div className="comment-container">
             {comment.author && user._id === comment.author._id && targetComment === comment && showCommentForm ?
                 <div>
                     <CommentForm user={user} post={post} comment={comment}
                         refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
-                    <button onClick={cancelUpdate}>Cancel</button>
+                    <div className="comment-btns">
+                        <button className="comment-cancel-btn" onClick={cancelUpdate}>Cancel</button>
+                    </div>
                 </div>
             :
-                <div>
-                    {comment.content}
-                    {likes.length > 0 ? likes.length +
-                        (likes.length === 1 ? ' Like' : ' Likes') : null}
-                    {comment.author && user._id === comment.author._id ?
-                        <div>
-                            <button onClick={updateComment}>Edit</button>
-                            <button onClick={deleteComment}>Delete</button>
+                <div className="comment">
+                    <div className="comment-left">
+                        {comment.author.photo ?
+                            <img className="profile-photo"
+                                src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + comment.author._id + "/" + comment.author.photo}
+                                alt={comment.author.firstName + ' ' + comment.author.lastName} />
+                        :
+                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
+                                alt={comment.author.firstName + ' ' + comment.author.lastName} />}
+                    </div>
+                    <div className="comment-right">
+                        <div className="comment-box">
+                            <div className="comment-author">
+                                <Link to={'/' + comment.author.username}>{comment.author.firstName + ' ' + comment.author.lastName}</Link>
+                            </div>
+                            <div className="comment-content">{comment.content}</div>
                         </div>
-                    :
-                        <div>
-                            {likes.includes(user._id) ?
-                                <button onClick={() => { likeComment('unlike') }}>Unlike</button>
-                            :
-                                <button onClick={() => { likeComment('like') }}>Like</button>}
-                        </div>}
+                        {likes.length > 0 ?
+                            <div className="comment-likes">{likes.length + (likes.length === 1 ? ' Like' : ' Likes')}</div>
+                        : null}
+                        {comment.author && user._id === comment.author._id ?
+                            <div className="comment-btns">
+                                <button onClick={updateComment}>Edit</button>
+                                <button onClick={deleteComment}>Delete</button>
+                            </div>
+                        :
+                            <div className="comment-btns">
+                                {likes.includes(user._id) ?
+                                    <button onClick={() => { likeComment('unlike') }}>Unlike</button>
+                                :
+                                    <button onClick={() => { likeComment('like') }}>Like</button>}
+                            </div>}
+                    </div>
                 </div>
             }
         </div>

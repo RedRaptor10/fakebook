@@ -135,7 +135,7 @@ header a:hover {
 
 header .profile-photo {
   width: 32px;
-  height: auto;
+  height: 32px;
   margin-right: 8px;
 }
 
@@ -323,7 +323,7 @@ main {
 
 #profile .profile-photo {
   width: 150px;
-  height: auto;
+  height: 150px;
 }
 
 /* Sidebar / Contacts */
@@ -376,7 +376,7 @@ main {
 
 #sidebar .profile-photo, #contacts .profile-photo {
   width: 32px;
-  height: auto;
+  height: 32px;
   margin-right: 8px;
 }
 
@@ -398,7 +398,7 @@ main {
 
 #timeline #create-post-container .profile-photo {
   width: 48px;
-  height: auto;
+  height: 48px;
   margin-right: 16px;
 }
 
@@ -412,6 +412,156 @@ main {
   padding: 0 8px;
   color: rgb(128, 128, 128);
   cursor: pointer;
+}
+
+/* Post */
+.post {
+  background: #fff;
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.post-meta {
+  display: flex;
+}
+
+.post .profile-photo {
+  width: 48px;
+  height: 48px;
+  margin-right: 8px;
+}
+
+.post-author a {
+  color: #000;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.post-date-public {
+  margin-top: 8px;
+  color: var(--link-color);
+}
+
+.post-date {
+  margin-right: 8px;
+}
+
+.post-content {
+  padding: 16px 0;
+}
+
+.post-likes {
+  color: var(--link-color);
+}
+
+.post-btns {
+  display: flex;
+  justify-content: center;
+  height: 32px;
+  margin: 8px 0;
+  padding: 4px 0;
+  border-top: 1px solid rgb(192, 192, 192);
+  border-bottom: 1px solid rgb(192, 192, 192);
+}
+
+.post-btns button {
+  background: none;
+  width: 100%;
+  height: 100%;
+  color: rgb(64, 64, 64);
+  font-size: 20px;
+}
+
+.post-btns button:hover {
+  background: rgb(240, 245, 245);
+  border-radius: 8px;
+}
+
+/* Comment Form */
+.comment-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.comment-form .profile-photo {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+
+.comment-form input {
+  display: flex;
+  align-items: center;
+  background: rgb(240, 245, 245);
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 16px;
+  padding: 0 8px;
+  color: rgb(64, 64, 64);
+  font-size: 16px;
+}
+
+/* Comment */
+.comment-container {
+  margin-top: 16px;
+}
+
+.comment {
+  display: flex;
+}
+
+.comment .profile-photo {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+
+.comment-right {
+  width: 100%;
+}
+
+.comment-box {
+  background: rgb(240, 245, 245);
+  width: 100%;
+  padding: 8px;
+  border-radius: 16px;
+  box-sizing: border-box;
+}
+
+.comment-author a {
+  color: #000;
+  font-weight: bold;
+}
+
+.comment-content {
+  padding: 4px 0;
+}
+
+.comment-likes {
+  margin: 4px 0;
+  color: var(--link-color);
+  font-size: 14px;
+}
+
+.comment-btns button {
+  background: none;
+  margin-right: 8px;
+  color: var(--link-color);
+  font-size: 14px;
+}
+
+.comment-btns button:hover {
+  background: none;
+  text-decoration: underline;
+}
+
+.comment-cancel-btn {
+  display: block;
+  margin-left: auto;
 }
 
 /* Forms */
