@@ -29,11 +29,13 @@ const Timeline = ({user}) => {
     }, [user._id, refreshToggle]);
 
     const createPost = () => {
+        document.body.classList.add('disable-scroll');
         setTargetPost();
         setShowPostForm(true);
     };
 
     const updatePost = post => {
+        document.body.classList.add('disable-scroll');
         setTargetPost(post);
         setShowPostForm(true);
     };

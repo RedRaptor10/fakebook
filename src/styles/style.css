@@ -233,8 +233,27 @@ footer {
   border: 1px solid #dd3c10;
 }
 
-/* Sign-up Form */
-#sign-up-form {
+/* Forms */
+.disable-scroll {
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  height: 150%;
+}
+
+.form-container, #sign-up-form-container, #photo-form-container, #profile-form-container, #post-form-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.form {
   position: relative;
   background: #fff;
   width: 25%;
@@ -261,7 +280,7 @@ footer {
   transform: translate(-50%, -50%);
 }
 
-#close-form-btn {
+.form #close-form-btn {
   position: absolute;
   background: none;
   right: 0;
@@ -271,7 +290,7 @@ footer {
   font-weight: bold;
 }
 
-#sign-up-form h3 {
+.form h3 {
   padding: 16px 0;
   font-weight: normal;
 }
@@ -285,7 +304,7 @@ footer {
   width: calc(50% - 4px);
 }
 
-#sign-up-form input {
+.form input {
   width: 100%;
   margin: 4px 0;
   padding: 8px;
@@ -296,16 +315,37 @@ footer {
   box-sizing: border-box;
 }
 
-#sign-up-form span {
+.form span {
   display: block;
   margin: 12px 0;
   color: var(--link-color);
   font-size: 12px;
 }
 
-#sign-up-form-btn {
+#sign-up-form #submit-btn {
   display: block;
   width: 50%;
+  margin: 24px auto;
+}
+
+#post-form select {
+  display: block;
+  margin: 8px 0;
+  cursor: pointer;
+}
+
+#post-form textarea {
+  width: 100%;
+  height: 128px;
+  font-size: 20px;
+  border: 0;
+  box-sizing: border-box;
+  resize: none;
+}
+
+#post-form #submit-btn {
+  display: block;
+  width: 100%;
   margin: 24px auto;
 }
 
@@ -562,34 +602,4 @@ main {
 .comment-cancel-btn {
   display: block;
   margin-left: auto;
-}
-
-/* Forms */
-#sign-up-form-container, #photo-form-container, #profile-form-container, #post-form-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
-.disable-scroll {
-  overflow: hidden;
-}
-
-.overlay {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.5);
-  width: 100%;
-  height: 150%;
-}
-
-#photo-form, #post-form {
-  position: relative;
-  background: rgb(64, 64, 64);
-  width: 50%;
-  height: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }

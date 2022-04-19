@@ -80,15 +80,16 @@ const PostForm = ({user, post, setShowPostForm, refreshToggle, setRefreshToggle 
 
     return (
         <div id="post-form-container">
-            <div className="overlay" onClick={() => { setShowPostForm(false) }}></div>
-            <form id="post-form" action="">
+            <div className="overlay" onClick={() => {
+                document.body.classList.remove('disable-scroll');
+                setShowPostForm(false) }}>
+            </div>
+            <form id="post-form" className="form" action="">
+                <button id="close-form-btn" type="button" onClick={() => {
+                    document.body.classList.remove('disable-scroll');
+                    setShowPostForm(false);
+                }}>X</button>
                 <h1>{!post ? 'Create Post' : 'Update Post'}</h1>
-                <select name="public" value={form.public} onChange={handleChange}>
-                    <option value="true">Public</option>
-                    <option value="false">Private</option>
-                </select>
-                <textarea type="textarea" name="content" value={form.content} onChange={handleChange}></textarea>
-                <button type="submit" onClick={submitPost}>{post ? 'Update' : 'Post'}</button>
                 {formErrors ?
                     <ul id="form-errors">
                         {formErrors.map((formError, i) => {
@@ -98,6 +99,13 @@ const PostForm = ({user, post, setShowPostForm, refreshToggle, setRefreshToggle 
                         })}
                     </ul>
                 : null}
+                <select name="public" value={form.public} onChange={handleChange}>
+                    <option value="true">Public</option>
+                    <option value="false">Private</option>
+                </select>
+                <textarea type="textarea" name="content" placeholder={'What\'s on your mind, ' + user.firstName + '?'}
+                    value={form.content} onChange={handleChange}></textarea>
+                <button className="btn btn-blue" id="submit-btn" type="submit" onClick={submitPost}>{post ? 'Update' : 'Post'}</button>
             </form>
         </div>
     );

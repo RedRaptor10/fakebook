@@ -48,7 +48,7 @@ const SignUpForm = ({setShowSignUpForm}) => {
     };
 
     return (
-        <div id="sign-up-form-container">
+        <div className="form-container">
             <div className="overlay" onClick={() => {
                 document.body.classList.remove('disable-scroll');
                 setShowSignUpForm(false);
@@ -58,7 +58,7 @@ const SignUpForm = ({setShowSignUpForm}) => {
                     <span>You have successfully signed up. Click <a href="/">here</a> to log in.</span>
                 </div>
             :
-                <form id="sign-up-form" action="">
+                <form id="sign-up-form" className="form" action="">
                     <button id="close-form-btn" type="button" onClick={() => {
                         document.body.classList.remove('disable-scroll');
                         setShowSignUpForm(false);
@@ -85,7 +85,7 @@ const SignUpForm = ({setShowSignUpForm}) => {
                     </div>
                     <div>
                         <span>By clicking Sign Up, you agree to our Terms, Data Policy and Cookies Policy.</span>
-                        <button className="btn btn-green" id="sign-up-form-btn" type="submit" name="submit" onClick={submitSignUp}>Sign Up</button>
+                        <button className="btn btn-green" id="submit-btn" type="submit" name="submit" onClick={submitSignUp}>Sign Up</button>
                     </div>
                 </form>
             }
