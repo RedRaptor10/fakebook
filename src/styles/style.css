@@ -85,7 +85,7 @@ button {
 }
 
 .btn {
-  padding: 8px 0;
+  padding: 8px;
   color: #fff;
   font-size: 20px;
   font-weight: bold;
@@ -242,10 +242,10 @@ footer {
   position: absolute;
   background: rgba(255, 255, 255, 0.5);
   width: 100%;
-  height: 150%;
+  height: 300%;
 }
 
-.form-container, #sign-up-form-container, #photo-form-container, #profile-form-container, #post-form-container {
+.form-container {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -254,9 +254,9 @@ footer {
 }
 
 .form {
-  position: relative;
+  position: fixed;
   background: #fff;
-  width: 25%;
+  width: 50%;
   min-height: 50%;
   top: 50%;
   left: 50%;
@@ -264,6 +264,10 @@ footer {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   transform: translate(-50%, -50%);
+}
+
+#sign-up-form {
+  width: 25%;
 }
 
 #sign-up-success {
@@ -361,11 +365,6 @@ main {
   border-radius: 50%;
 }
 
-#profile .profile-photo {
-  width: 150px;
-  height: 150px;
-}
-
 /* Sidebar / Contacts */
 #sidebar, #contacts {
     background: rgb(240, 245, 245);
@@ -428,7 +427,7 @@ main {
     box-sizing: border-box;
 }
 
-#timeline #create-post-container {
+#create-post-container {
   display: flex;
   background: #fff;
   padding: 16px;
@@ -436,13 +435,13 @@ main {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#timeline #create-post-container .profile-photo {
+#create-post-container .profile-photo {
   width: 48px;
   height: 48px;
   margin-right: 16px;
 }
 
-#timeline #create-post-container #create-post-btn {
+#create-post-container #create-post-btn {
   display: flex;
   align-items: center;
   background: rgb(240, 245, 245);
@@ -602,4 +601,94 @@ main {
 .comment-cancel-btn {
   display: block;
   margin-left: auto;
+}
+
+/* Profile */
+#profile {
+  display: block;
+  width: 75%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+#profile-info {
+  display: flex;
+}
+
+#profile-info .profile-photo {
+  width: 200px;
+  height: 200px;
+}
+
+#edit-photo-btn {
+  display: block;
+  background: none;
+  margin: 0 auto;
+  color: var(--link-color);
+  font-size: 16px;
+}
+
+#edit-photo-btn:hover {
+  text-decoration: underline;
+}
+
+#profile-name {
+  margin: 32px;
+}
+
+#profile-name h3 {
+  color: rgb(96, 96, 96);
+}
+
+#profile-btns {
+  margin: auto 0 0 auto;
+}
+
+#profile hr {
+  color: #fff;
+}
+
+#profile-main {
+  display: flex;
+}
+
+#profile-sidebar {
+  width: calc(100% / 3);
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+#profile-posts-container {
+  width: calc((100% / 3) * 2);
+}
+
+#profile-friends-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+#profile-friends-display a {
+  width: calc(33% - 16px);
+  box-sizing: border-box;
+}
+
+.profile-friend-photo {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.profile-friend-name {
+  text-align: center;
+  color: #000;
+  font-weight: bold;
+}
+
+#profile #create-post-container {
+  margin-bottom: 16px;
 }

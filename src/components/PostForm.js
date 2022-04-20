@@ -79,7 +79,7 @@ const PostForm = ({user, post, setShowPostForm, refreshToggle, setRefreshToggle 
     };
 
     return (
-        <div id="post-form-container">
+        <div className="form-container">
             <div className="overlay" onClick={() => {
                 document.body.classList.remove('disable-scroll');
                 setShowPostForm(false) }}>

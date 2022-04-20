@@ -56,7 +56,7 @@ const Profile = ({user, setUser}) => {
                 return res.json();
             })
             .then(function(res) {
-                setFriends(res);
+                setFriends(res.splice(0, 9)); // Display only 9 friends
             });
         }
     }, [profile, username]);
@@ -137,9 +137,6 @@ const Profile = ({user, setUser}) => {
     return (
         profile ?
             <main id="profile">
-                <section id="profile-header">
-                    <div id="cover"></div>
-                </section>
                 <section id="profile-info">
                     <div id="profile-photo">
                         {profile.photo ?
@@ -148,49 +145,71 @@ const Profile = ({user, setUser}) => {
                             <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
                                 alt={user.firstName + ' ' + user.lastName} />}
                         {user._id === profile._id ?
-                            <button onClick={() => { setShowPhotoForm(true) }}>Edit photo</button>
+                            <button id="edit-photo-btn" onClick={() => { setShowPhotoForm(true) }}>Edit photo</button>
                         : null}
                     </div>
-                    <h1>{profile.firstName + ' ' + profile.lastName}</h1>
-                    <h3>{profile.friends.length + (profile.friends.length === 1 ? ' Friend' : ' Friends')}</h3>
-                    {user._id === profile._id ?
-                        <button onClick={() => { setShowProfileForm(true) }}>Edit profile</button>
-                    :
-                        profile.friends.includes(user._id) ? <button onClick={() => { handleRequest('delete') }}>Delete Friend</button> :
-                            profile.requests.received.includes(user._id) ? <button onClick={() => { handleRequest('deleteSent') }}>Cancel Friend Request</button> :
-                                profile.requests.sent.includes(user._id) ?
-                                <div>
-                                    <button onClick={() => { handleRequest('add') }}>Accept Request</button>
-                                    <button onClick={() => { handleRequest('deleteReceived') }}>Delete Request</button>
-                                </div>
-                            :
-                                <button onClick={() => { handleRequest('send') }}>Add Friend</button>}
+                    <div id="profile-name">
+                        <h1>{profile.firstName + ' ' + profile.lastName}</h1>
+                        <h3>{profile.friends.length + (profile.friends.length === 1 ? ' Friend' : ' Friends')}</h3>
+                    </div>
+                    <div id="profile-btns">
+                        {user._id === profile._id ?
+                            <button className="btn btn-blue" onClick={() => { setShowProfileForm(true) }}>Edit profile</button>
+                        :
+                            profile.friends.includes(user._id) ? <button className="btn btn-blue" onClick={() => { handleRequest('delete') }}>Delete Friend</button> :
+                                profile.requests.received.includes(user._id) ? <button className="btn btn-blue" onClick={() => { handleRequest('deleteSent') }}>Cancel Friend Request</button> :
+                                    profile.requests.sent.includes(user._id) ?
+                                    <div>
+                                        <button className="btn btn-blue" onClick={() => { handleRequest('add') }}>Accept Request</button>
+                                        <button className="btn btn-blue" onClick={() => { handleRequest('deleteReceived') }}>Delete Request</button>
+                                    </div>
+                                :
+                                    <button className="btn btn-blue" onClick={() => { handleRequest('send') }}>Add Friend</button>}
+                    </div>
                 </section>
-                <nav id="profile-nav">
-                    <ul>
-                        <li>Posts</li>
-                        <li>About</li>
-                        <li>Friends</li>
-                    </ul>
-                </nav>
+                <hr />
                 <section id="profile-main">
                     <aside id="profile-sidebar">
                         <div id="profile-friends">
-                            <h3>Friends</h3>
-                            {friends ?
-                                friends.map(friend => {
-                                    return (
-                                        <Link key={friend._id} to={'/' + friend.username}>
-                                            {friend.firstName + ' ' + friend.lastName}
-                                        </Link>
-                                    )
-                                })
-                            : null}
+                            <h2>Friends</h2>
+                            <div id="profile-friends-display">
+                                {friends ?
+                                    friends.map(friend => {
+                                        return (
+                                            <Link key={friend._id} to={'/' + friend.username}>
+                                                <div className="profile-friend">
+                                                    {friend.photo ?
+                                                        <img className="profile-friend-photo"
+                                                            src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + friend._id + "/" + friend.photo}
+                                                            alt={friend.firstName + ' ' + friend.lastName} />
+                                                    :
+                                                        <img className="profile-friend-photo"
+                                                            src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
+                                                            alt={friend.firstName + ' ' + friend.lastName} />}
+                                                    <div className="profile-friend-name">
+                                                        {friend.firstName + ' ' + friend.lastName}
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        )
+                                    })
+                                : null}
+                            </div>
                         </div>
                     </aside>
                     <div id="profile-posts-container">
-                        {user._id === profile._id ? <div onClick={createPost}>Create Post</div> : null}
-                        <h3>Posts</h3>
+                        {user._id === profile._id ?
+                            <div id="create-post-container">
+                                {user.photo ?
+                                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + user._id + "/" + user.photo}
+                                    alt={user.firstName + ' ' + user.lastName} />
+                                :
+                                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
+                                        alt={user.firstName + ' ' + user.lastName} />}
+                                <div id="create-post-btn" onClick={createPost}>What's on your mind, {user.firstName}?</div>
+                            </div>
+                        : null}
+                        <h2>Posts</h2>
                         <div id="profile-posts">
                             {posts ?
                                 posts.map(post => {

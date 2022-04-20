@@ -61,7 +61,7 @@ const PhotoForm = ({user, setUser, setShowPhotoForm }) => {
     };
 
     return (
-        <div id="photo-form-container">
+        <div className="form-container">
             <div className="overlay" onClick={() => { setShowPhotoForm(false) }}></div>
             <form id="photo-form" action="" encType="multipart/form-data">
                 <input type="file" name="photo" onChange={handleChange}></input>

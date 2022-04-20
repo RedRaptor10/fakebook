@@ -63,7 +63,7 @@ const ProfileForm = ({user, setUser, profile, setShowProfileForm }) => {
     };
 
     return (
-        <div id="profile-form-container">
+        <div className="form-container">
             <div className="overlay" onClick={() => { setShowProfileForm(false) }}></div>
             <form id="post-form" action="">
                 <h1>Edit Profile</h1>
