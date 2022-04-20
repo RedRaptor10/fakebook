@@ -64,9 +64,21 @@ const ProfileForm = ({user, setUser, profile, setShowProfileForm }) => {
 
     return (
         <div className="form-container">
-            <div className="overlay" onClick={() => { setShowProfileForm(false) }}></div>
-            <form id="post-form" action="">
+            <div className="overlay" onClick={() => {
+                document.body.classList.remove('disable-scroll');
+                setShowProfileForm(false)
+            }}></div>
+            <form id="profile-form" className="form" action="">
                 <h1>Edit Profile</h1>
+                {formErrors ?
+                    <ul id="form-errors">
+                        {formErrors.map((formError, i) => {
+                            return (
+                                <li key={i}>{formError.msg}</li>
+                            )
+                        })}
+                    </ul>
+                : null}
                 <select name="public" value={form.public} onChange={handleChange}>
                     <option value="true">Public</option>
                     <option value="false">Private</option>
@@ -83,16 +95,7 @@ const ProfileForm = ({user, setUser, profile, setShowProfileForm }) => {
                 <input type="text" name="firstName" value={form.firstName} onChange={handleChange}></input>
                 <label htmlFor="lastName">Last Name</label>
                 <input type="text" name="lastName" value={form.lastName} onChange={handleChange}></input>
-                <button type="submit" onClick={submitProfile}>Update</button>
-                {formErrors ?
-                    <ul id="form-errors">
-                        {formErrors.map((formError, i) => {
-                            return (
-                                <li key={i}>{formError.msg}</li>
-                            )
-                        })}
-                    </ul>
-                : null}
+                <button id="submit-btn" className="btn btn-blue" type="submit" onClick={submitProfile}>Update</button>
             </form>
         </div>
     );

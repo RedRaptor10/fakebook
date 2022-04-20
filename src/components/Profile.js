@@ -145,7 +145,10 @@ const Profile = ({user, setUser}) => {
                             <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
                                 alt={user.firstName + ' ' + user.lastName} />}
                         {user._id === profile._id ?
-                            <button id="edit-photo-btn" onClick={() => { setShowPhotoForm(true) }}>Edit photo</button>
+                            <button id="edit-photo-btn" onClick={() => {
+                                document.body.classList.add('disable-scroll');
+                                setShowPhotoForm(true);
+                            }}>Edit photo</button>
                         : null}
                     </div>
                     <div id="profile-name">
@@ -154,7 +157,10 @@ const Profile = ({user, setUser}) => {
                     </div>
                     <div id="profile-btns">
                         {user._id === profile._id ?
-                            <button className="btn btn-blue" onClick={() => { setShowProfileForm(true) }}>Edit profile</button>
+                            <button className="btn btn-blue" onClick={() => {
+                                document.body.classList.add('disable-scroll');
+                                setShowProfileForm(true);
+                            }}>Edit profile</button>
                         :
                             profile.friends.includes(user._id) ? <button className="btn btn-blue" onClick={() => { handleRequest('delete') }}>Delete Friend</button> :
                                 profile.requests.received.includes(user._id) ? <button className="btn btn-blue" onClick={() => { handleRequest('deleteSent') }}>Cancel Friend Request</button> :

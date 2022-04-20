@@ -73,6 +73,7 @@ const PostForm = ({user, post, setShowPostForm, refreshToggle, setRefreshToggle 
             else {
                 // Success. Toggle refresh state and close form
                 refreshToggle ? setRefreshToggle(false) : setRefreshToggle(true);
+                document.body.classList.remove('disable-scroll');
                 setShowPostForm(false);
             }
         });

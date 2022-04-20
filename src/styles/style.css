@@ -109,6 +109,14 @@ button {
   background-color: #36a420;
 }
 
+.btn-red {
+  background-color: #f03c24;
+}
+
+.btn-red:hover {
+  background-color: #e82e15;
+}
+
 /* Header */
 header {
     display: flex;
@@ -332,7 +340,7 @@ footer {
   margin: 24px auto;
 }
 
-#post-form select {
+#post-form select, #profile-form select {
   display: block;
   margin: 8px 0;
   cursor: pointer;
@@ -351,6 +359,21 @@ footer {
   display: block;
   width: 100%;
   margin: 24px auto;
+}
+
+#photo-form #form-btns {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+#photo-form #form-btns button {
+  margin-right: 16px;
+}
+
+#profile-form #submit-btn {
+  display: block;
+  margin: 16px auto;
 }
 
 /* Main */

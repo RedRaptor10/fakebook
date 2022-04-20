@@ -56,17 +56,20 @@ const PhotoForm = ({user, setUser, setShowPhotoForm }) => {
             setUser(res.user);
             document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
 
+            document.body.classList.remove('disable-scroll');
             setShowPhotoForm(false);
         });
     };
 
     return (
         <div className="form-container">
-            <div className="overlay" onClick={() => { setShowPhotoForm(false) }}></div>
-            <form id="photo-form" action="" encType="multipart/form-data">
+            <div className="overlay" onClick={() => {
+                document.body.classList.remove('disable-scroll');
+                setShowPhotoForm(false)
+            }}></div>
+            <form id="photo-form" className="form" action="" encType="multipart/form-data">
+                <h1>Upload a photo</h1>
                 <input type="file" name="photo" onChange={handleChange}></input>
-                {user.photo ? <button type="button" onClick={deletePhoto}>Delete</button> : null}
-                <button type="submit" onClick={submitPhoto}>Upload</button>
                 {formErrors ?
                     <ul id="form-errors">
                         {formErrors.map((formError, i) => {
@@ -76,6 +79,10 @@ const PhotoForm = ({user, setUser, setShowPhotoForm }) => {
                         })}
                     </ul>
                 : null}
+                <div id="form-btns">
+                    {user.photo ? <button className="btn btn-red" type="button" onClick={deletePhoto}>Delete</button> : null}
+                    <button id="submit-btn" className="btn btn-blue" type="submit" onClick={submitPhoto}>Upload</button>
+                </div>
             </form>
         </div>
     )
