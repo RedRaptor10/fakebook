@@ -50,31 +50,43 @@ const Users = ({user, setUser}) => {
     };
 
     return (
-        <div id="users">
-            <h3>Find Friends</h3>
+        <main id="users">
+            <h1>Find Friends</h1>
             {users ?
-                users.map(u => {
-                    return (
-                        u._id !== user._id ?
-                            <div key={u._id}>
-                                <Link to={'/' + u.username}>
-                                    {u.firstName + ' ' + u.lastName}
-                                </Link>
-                                {u.friends.includes(user._id) ? <button onClick={() => { handleRequest('delete', u.username) }}>Delete Friend</button> :
-                                u.requests.received.includes(user._id) ? <button onClick={() => { handleRequest('deleteSent', u.username) }}>Cancel Friend Request</button> :
-                                u.requests.sent.includes(user._id) ?
-                                    <div>
-                                        <button onClick={() => { handleRequest('add', u.username) }}>Accept Request</button>
-                                        <button onClick={() => { handleRequest('deleteReceived', u.username) }}>Delete Request</button>
+                <div id="users-list">
+                    {users.map(u => {
+                        return (
+                            u._id !== user._id ?
+                                <div key={u._id} className="users-list-user">
+                                    <div className="users-list-info">
+                                        {u.photo ?
+                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + u._id + "/" + u.photo}
+                                                alt={u.firstName + ' ' + u.lastName} />
+                                        :
+                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
+                                                alt={u.firstName + ' ' + u.lastName} />}
+                                        <Link to={'/' + u.username}>
+                                            <div className="users-list-name">{u.firstName + ' ' + u.lastName}</div>
+                                        </Link>
                                     </div>
-                                :
-                                    <button onClick={() => { handleRequest('send', u.username) }}>Add Friend</button>}
-                            </div>
-                        : null
-                    )
-                })
+                                    <div className="users-list-btns">
+                                        {u.friends.includes(user._id) ? <button className="btn btn-red" onClick={() => { handleRequest('delete', u.username) }}>Delete Friend</button> :
+                                        u.requests.received.includes(user._id) ? <button className="btn btn-red" onClick={() => { handleRequest('deleteSent', u.username) }}>Cancel Friend Request</button> :
+                                        u.requests.sent.includes(user._id) ?
+                                            <div>
+                                                <button className="btn btn-blue" onClick={() => { handleRequest('add', u.username) }}>Accept Request</button>
+                                                <button className="btn btn-red" onClick={() => { handleRequest('deleteReceived', u.username) }}>Delete Request</button>
+                                            </div>
+                                        :
+                                            <button className="btn btn-blue" onClick={() => { handleRequest('send', u.username) }}>Add Friend</button>}
+                                    </div>
+                                </div>
+                            : null
+                        )
+                    })}
+                </div>
             : null}
-        </div>
+        </main>
     )
 };
 

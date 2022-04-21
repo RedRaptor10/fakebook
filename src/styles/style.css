@@ -685,6 +685,7 @@ main {
 
 #profile-posts-container {
   width: calc((100% / 3) * 2);
+  padding: 16px;
 }
 
 #profile-friends-display {
@@ -714,4 +715,66 @@ main {
 
 #profile #create-post-container {
   margin-bottom: 16px;
+}
+
+/* Users / Requests */
+#users, #requests-sent, #requests-received {
+  display: block;
+  background: none;
+  width: 75%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+#requests-sent #change-view-btn, #requests-received #change-view-btn {
+  background: none;
+  margin-top: 8px;
+  color: var(--link-color);
+  font-size: 16px;
+}
+
+#requests-sent #change-view-btn:hover, #requests-received #change-view-btn:hover {
+  text-decoration: underline;
+}
+
+#users-list, #requests-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  width: 75%;
+  margin: 16px auto;
+}
+
+.users-list-user, .requests-list-user {
+  display: flex;
+  flex-direction: column;
+  background: rgb(240, 245, 245);
+  width: calc(50% - 16px);
+  padding: 8px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.users-list-info, .requests-list-info {
+  display: flex;
+}
+
+.users-list-info .profile-photo, .requests-list-info .profile-photo {
+  width: 64px;
+  height: 64px;
+  margin-right: 8px;
+}
+
+.users-list-name, .requests-list-name {
+  margin-top: 8px;
+  color: #000;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.users-list-btns, .requests-list-btns {
+  text-align: center;
+  margin-top: 8px;
 }

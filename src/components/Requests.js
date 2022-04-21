@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { getCookie } from '../helpers/cookies';
 
 const Requests = ({user, setUser}) => {
@@ -49,32 +50,64 @@ const Requests = ({user, setUser}) => {
 
     return (
         type === 'sent' ?
-            <div>
+            <main id="requests-sent">
                 <h1>Sent Requests</h1>
-                <button onClick={() => { setType('received') }}>Received</button>
-                {sent ? sent.map(request => {
-                    return (
-                        <div key={request._id}>
-                            {request.firstName + ' ' + request.lastName}
-                            <button onClick={() => handleRequest('deleteSent', request.username)}>Cancel Request</button>
-                        </div>
-                    )
-                }) : null}
-            </div>
+                <button id="change-view-btn" onClick={() => { setType('received') }}>View Received Requests</button>
+                {sent ?
+                    <div id="requests-list">
+                        {sent.map(request => {
+                            return (
+                                <div key={request._id} className="requests-list-user">
+                                    <div className="requests-list-info">
+                                        {request.photo ?
+                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + request._id + "/" + request.photo}
+                                                alt={request.firstName + ' ' + request.lastName} />
+                                        :
+                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
+                                                alt={request.firstName + ' ' + request.lastName} />}
+                                        <Link to={'/' + request.username}>
+                                            <div className="requests-list-name">{request.firstName + ' ' + request.lastName}</div>
+                                        </Link>
+                                    </div>
+                                    <div className="requests-list-btns">
+                                        <button className="btn btn-red" onClick={() => handleRequest('deleteSent', request.username)}>Cancel Request</button>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                : null}
+            </main>
         :
-            <div>
+            <main id="requests-received">
                 <h1>Received Requests</h1>
-                <button onClick={() => { setType('sent') }}>Sent</button>
-                {received ? received.map(request => {
-                    return (
-                        <div key={request._id}>
-                            {request.firstName + ' ' + request.lastName}
-                            <button onClick={() => handleRequest('add', request.username)}>Accept Request</button>
-                            <button onClick={() => handleRequest('deleteReceived', request.username)}>Delete Request</button>
-                        </div>
-                    )
-                }) : null}
-            </div>
+                <button id="change-view-btn" onClick={() => { setType('sent') }}>View Sent Requests</button>
+                {received ?
+                    <div id="requests-list">
+                        {received.map(request => {
+                            return (
+                                <div key={request._id} className="requests-list-user">
+                                    <div className="requests-list-info">
+                                        {request.photo ?
+                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + request._id + "/" + request.photo}
+                                                alt={request.firstName + ' ' + request.lastName} />
+                                        :
+                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
+                                                alt={request.firstName + ' ' + request.lastName} />}
+                                        <Link to={'/' + request.username}>
+                                            <div className="requests-list-name">{request.firstName + ' ' + request.lastName}</div>
+                                        </Link>
+                                    </div>
+                                    <div className="requests-list-btns">
+                                        <button className="btn btn-blue" onClick={() => handleRequest('add', request.username)}>Accept Request</button>
+                                        <button className="btn btn-red" onClick={() => handleRequest('deleteReceived', request.username)}>Delete Request</button>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                : null}
+            </main>
     );
 };
 
