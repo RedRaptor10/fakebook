@@ -609,11 +609,17 @@ main {
   font-size: 14px;
 }
 
+.comment-footer {
+  display: flex;
+  align-items: center;
+}
+
 .comment-btns button {
   background: none;
   margin-right: 8px;
   color: var(--link-color);
   font-size: 14px;
+  font-weight: bold;
 }
 
 .comment-btns button:hover {
@@ -624,6 +630,11 @@ main {
 .comment-cancel-btn {
   display: block;
   margin-left: auto;
+}
+
+.comment-date {
+  color: var(--link-color);
+  font-size: 14px;
 }
 
 /* Profile */
@@ -777,4 +788,8 @@ main {
 .users-list-btns, .requests-list-btns {
   text-align: center;
   margin-top: 8px;
+}
+
+.users-list-btns button, .requests-list-btns button {
+  margin: 0 8px;
 }

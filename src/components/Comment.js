@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CommentForm from './CommentForm';
 import { getCookie } from '../helpers/cookies';
+import getElapsedTime from '../helpers/getElapsedTime';
 
 const Comment = ({user, post, comment, targetComment, setTargetComment, showCommentForm, setShowCommentForm, refreshToggle, setRefreshToggle}) => {
     const [likes, setLikes] = useState(comment.likes);
@@ -88,18 +89,21 @@ const Comment = ({user, post, comment, targetComment, setTargetComment, showComm
                         {likes.length > 0 ?
                             <div className="comment-likes">{likes.length + (likes.length === 1 ? ' Like' : ' Likes')}</div>
                         : null}
-                        {comment.author && user._id === comment.author._id ?
-                            <div className="comment-btns">
-                                <button onClick={updateComment}>Edit</button>
-                                <button onClick={deleteComment}>Delete</button>
-                            </div>
-                        :
-                            <div className="comment-btns">
-                                {likes.includes(user._id) ?
-                                    <button onClick={() => { likeComment('unlike') }}>Unlike</button>
-                                :
-                                    <button onClick={() => { likeComment('like') }}>Like</button>}
-                            </div>}
+                        <div className="comment-footer">
+                            {comment.author && user._id === comment.author._id ?
+                                <div className="comment-btns">
+                                    <button onClick={updateComment}>Edit</button>
+                                    <button onClick={deleteComment}>Delete</button>
+                                </div>
+                            :
+                                <div className="comment-btns">
+                                    {likes.includes(user._id) ?
+                                        <button onClick={() => { likeComment('unlike') }}>Unlike</button>
+                                    :
+                                        <button onClick={() => { likeComment('like') }}>Like</button>}
+                                </div>}
+                            <div className="comment-date">{getElapsedTime(new Date(comment.date))}</div>
+                        </div>
                     </div>
                 </div>
             }
