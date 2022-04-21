@@ -694,11 +694,6 @@ main {
   box-sizing: border-box;
 }
 
-#profile-posts-container {
-  width: calc((100% / 3) * 2);
-  padding: 16px;
-}
-
 #profile-friends-display {
   display: flex;
   flex-wrap: wrap;
@@ -726,6 +721,18 @@ main {
 
 #profile #create-post-container {
   margin-bottom: 16px;
+}
+
+#profile-posts-container {
+  width: calc((100% / 3) * 2);
+  padding: 16px;
+}
+
+#profile-private {
+  width: calc((100% / 3) * 2);
+  padding: 16px;
+  text-align: center;
+  font-size: 20px;
 }
 
 /* Users / Requests */

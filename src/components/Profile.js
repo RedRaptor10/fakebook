@@ -203,31 +203,34 @@ const Profile = ({user, setUser}) => {
                             </div>
                         </div>
                     </aside>
-                    <div id="profile-posts-container">
-                        {user._id === profile._id ?
-                            <div id="create-post-container">
-                                {user.photo ?
-                                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + user._id + "/" + user.photo}
-                                    alt={user.firstName + ' ' + user.lastName} />
-                                :
-                                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                                        alt={user.firstName + ' ' + user.lastName} />}
-                                <div id="create-post-btn" onClick={createPost}>What's on your mind, {user.firstName}?</div>
-                            </div>
-                        : null}
-                        <h2>Posts</h2>
-                        <div id="profile-posts">
-                            {posts ?
-                                posts.map(post => {
-                                    return (
-                                        user._id === profile._id || post.public ?
-                                            <Post key={post._id} user={user} post={post} updatePost={updatePost} deletePost={deletePost} />
-                                        : null
-                                    )
-                                })
+                    {profile.public || user._id === profile._id || profile.friends.includes(user._id) || user.admin ?
+                        <div id="profile-posts-container">
+                            {user._id === profile._id ?
+                                <div id="create-post-container">
+                                    {user.photo ?
+                                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + user._id + "/" + user.photo}
+                                        alt={user.firstName + ' ' + user.lastName} />
+                                    :
+                                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
+                                            alt={user.firstName + ' ' + user.lastName} />}
+                                    <div id="create-post-btn" onClick={createPost}>What's on your mind, {user.firstName}?</div>
+                                </div>
                             : null}
+                            <h2>Posts</h2>
+                            <div id="profile-posts">
+                                {posts ?
+                                    posts.map(post => {
+                                        return (
+                                            user._id === profile._id || post.public ?
+                                                <Post key={post._id} user={user} post={post} updatePost={updatePost} deletePost={deletePost} />
+                                            : null
+                                        )
+                                    })
+                                : null}
+                            </div>
                         </div>
-                    </div>
+                    :
+                        <div id="profile-private">This profile is private.</div>}
                 </section>
                 {showPhotoForm ?
                     <PhotoForm user={user} setUser={setUser} setShowPhotoForm={setShowPhotoForm} />
