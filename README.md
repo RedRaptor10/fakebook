@@ -6,6 +6,8 @@ Odinbook app created in NodeJS using Express through [TheOdinProject](https://ww
 
 **Client** - [View Demo](https://redraptor10.github.io/odinbook/) | [View Repo](https://github.com/RedRaptor10/odinbook/)
 
+![Odinbook](/src/assets/preview.jpg)
+
 # User Credentials
 
 To use the app, log-in with any of the existing accounts below or create your own account.
