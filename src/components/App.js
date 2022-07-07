@@ -15,11 +15,11 @@ const App = () => {
 
   // Check authorization on mount
   useEffect(() => {
-    let token = getCookie('odinbook_api_token');
+    let token = getCookie('fakebook_api_token');
 		// If no token then unset user, delete cookie, and exit
 		if (token === '') {
 			setUser();
-      deleteCookie('odinbook_api_token');
+      deleteCookie('fakebook_api_token');
       setLoaded(true);
 			return;
 		}
@@ -35,7 +35,7 @@ const App = () => {
 			// If unauthorized then unset user, delete cookie, and throw error
 			if (res.statusText === 'Unauthorized') {
 				setUser();
-				deleteCookie('odinbook_api_token');
+				deleteCookie('fakebook_api_token');
 				throw new Error(res.statusText);
 			} else {
 				return res.json();

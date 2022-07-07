@@ -6,7 +6,7 @@ Fakebook is a clone of a popular social media website created in NodeJS using Ex
 
 **Client** - [View Demo](https://redraptor10.github.io/fakebook/) | [View Repo](https://github.com/RedRaptor10/fakebook/)
 
-![Odinbook](/src/assets/preview.jpg)
+![Fakebook](/src/assets/preview.jpg)
 
 # User Credentials
 

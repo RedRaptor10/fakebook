@@ -18,7 +18,7 @@ const Comment = ({user, post, comment, targetComment, setTargetComment, showComm
     };
 
     const deleteComment = () => {
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'POST',
@@ -34,7 +34,7 @@ const Comment = ({user, post, comment, targetComment, setTargetComment, showComm
     };
 
     const likeComment = type => {
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'POST',

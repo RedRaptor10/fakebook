@@ -7,7 +7,7 @@ const Contacts = ({user}) => {
 
     // Get Friends
     useEffect(() => {
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'GET',

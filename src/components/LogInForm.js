@@ -36,7 +36,7 @@ const LogInForm = ({setUser}) => {
             else if (!res.user) { setLogInErrors([{ msg: res.info.message }]); } // Incorrect email/password
             else {
                 // Success. Set token as a cookie and set user
-                document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
+                document.cookie = 'fakebook_api_token=' + res.token + '; SameSite=Lax; path=/';
                 setUser(res.user);
             }
         });
@@ -46,8 +46,8 @@ const LogInForm = ({setUser}) => {
         <main id="log-in-page">
             <div id="log-in-form-container">
                 <div id="log-in-form-left">
-                    <h1>odinbook</h1>
-                    <h2>Connect with friends and the world around you on Odinbook.</h2>
+                    <h1>fakebook</h1>
+                    <h2>Connect with friends and the world around you on fakebook.</h2>
                 </div>
                 <div id="log-in-form-right">
                     <form id="log-in-form" action ="">

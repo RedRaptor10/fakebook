@@ -12,7 +12,7 @@ const PostForm = ({user, post, setShowPostForm, refreshToggle, setRefreshToggle 
     // If Post Update, get Post content
     useEffect(() => {
         if (post) {
-            let token = getCookie('odinbook_api_token');
+            let token = getCookie('fakebook_api_token');
 
             const options = {
                 method: 'GET',
@@ -47,7 +47,7 @@ const PostForm = ({user, post, setShowPostForm, refreshToggle, setRefreshToggle 
         let route = 'api/posts/create';
         if (post) { route = 'api/posts/' + post._id + '/update'; }
 
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'POST',

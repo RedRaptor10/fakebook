@@ -8,7 +8,7 @@ const Header = ({user, setUser}) => {
         fetch(process.env.REACT_APP_SERVER + 'api/log-out', { mode: 'cors' })
         .then(function() {
             setUser();
-            deleteCookie('odinbook_api_token');
+            deleteCookie('fakebook_api_token');
             navigate('/');
         });
     };
@@ -16,7 +16,7 @@ const Header = ({user, setUser}) => {
     return (
         <header>
             <h1>
-                <Link to="/">odinbook</Link>
+                <Link to="/">fakebook</Link>
             </h1>
             <div id="header-items">
                 <Link to={'/' + user.username}>

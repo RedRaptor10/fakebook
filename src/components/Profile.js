@@ -20,7 +20,7 @@ const Profile = ({user, setUser}) => {
 
     // Get Profile
     useEffect(() => {
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'GET',
@@ -43,7 +43,7 @@ const Profile = ({user, setUser}) => {
     // Get Friends
     useEffect(() => {
         if (profile) {
-            let token = getCookie('odinbook_api_token');
+            let token = getCookie('fakebook_api_token');
 
             const options = {
                 method: 'GET',
@@ -64,7 +64,7 @@ const Profile = ({user, setUser}) => {
     // Get Posts
     useEffect(() => {
         if (userId) {
-            let token = getCookie('odinbook_api_token');
+            let token = getCookie('fakebook_api_token');
 
             const options = {
                 method: 'GET',
@@ -90,7 +90,7 @@ const Profile = ({user, setUser}) => {
         else if (action === 'deleteSent') { subroute = '/delete-request/sent' }
         else if (action === 'deleteReceived') { subroute = '/delete-request/received' }
 
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'POST',
@@ -104,7 +104,7 @@ const Profile = ({user, setUser}) => {
             // Set User and Profile states and update token
             setUser(res.user);
             setProfile(res.target);
-            document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
+            document.cookie = 'fakebook_api_token=' + res.token + '; SameSite=Lax; path=/';
         });
     };
 
@@ -119,7 +119,7 @@ const Profile = ({user, setUser}) => {
     };
 
     const deletePost = post => {
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'POST',

@@ -25,7 +25,7 @@ const ProfileForm = ({user, setUser, profile, setShowProfileForm }) => {
     const submitProfile = event => {
         event.preventDefault();
 
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'POST',
@@ -54,7 +54,7 @@ const ProfileForm = ({user, setUser, profile, setShowProfileForm }) => {
             else {
                 // Success. Set User state and update token
                 setUser(res.user);
-                document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
+                document.cookie = 'fakebook_api_token=' + res.token + '; SameSite=Lax; path=/';
 
                 // Navigate to Home page
                 navigate('/');

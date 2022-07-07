@@ -15,7 +15,7 @@ const PhotoForm = ({user, setUser, setShowPhotoForm }) => {
         const formData = new FormData();
         formData.append('photo', photo);
 
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'POST',
@@ -31,7 +31,7 @@ const PhotoForm = ({user, setUser, setShowPhotoForm }) => {
             else {
                 // Success. Set User state and update token
                 setUser(res.user);
-                document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
+                document.cookie = 'fakebook_api_token=' + res.token + '; SameSite=Lax; path=/';
 
                 setShowPhotoForm(false);
             }
@@ -41,7 +41,7 @@ const PhotoForm = ({user, setUser, setShowPhotoForm }) => {
     const deletePhoto = event => {
         event.preventDefault();
 
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'POST',
@@ -54,7 +54,7 @@ const PhotoForm = ({user, setUser, setShowPhotoForm }) => {
         .then(function(res) {
             // Success. Set User state and update token
             setUser(res.user);
-            document.cookie = 'odinbook_api_token=' + res.token + '; SameSite=Lax; path=/';
+            document.cookie = 'fakebook_api_token=' + res.token + '; SameSite=Lax; path=/';
 
             document.body.classList.remove('disable-scroll');
             setShowPhotoForm(false);

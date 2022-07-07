@@ -15,7 +15,7 @@ const CommentForm = ({user, post, comment, refreshToggle, setRefreshToggle }) =>
     // If Comment Update, get Comment content
     useEffect(() => {
         if (comment) {
-            let token = getCookie('odinbook_api_token');
+            let token = getCookie('fakebook_api_token');
 
             const options = {
                 method: 'GET',
@@ -42,7 +42,7 @@ const CommentForm = ({user, post, comment, refreshToggle, setRefreshToggle }) =>
             let route = 'api/posts/' + post._id + '/comments/create';
             if (comment) { route = 'api/posts/' + post._id + '/comments/' + comment._id + '/update'; }
 
-            let token = getCookie('odinbook_api_token');
+            let token = getCookie('fakebook_api_token');
 
             const options = {
                 method: 'POST',

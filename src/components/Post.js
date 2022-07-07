@@ -14,7 +14,7 @@ const Post = ({user, post, updatePost, deletePost}) => {
 
     // Get Post Comments
     useEffect(() => {
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'GET',
@@ -30,7 +30,7 @@ const Post = ({user, post, updatePost, deletePost}) => {
     }, [post, refreshToggle]);
 
     const likePost = type => {
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'POST',

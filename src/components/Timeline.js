@@ -11,7 +11,7 @@ const Timeline = ({user}) => {
 
     // Get Posts
     useEffect(() => {
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'GET',
@@ -41,7 +41,7 @@ const Timeline = ({user}) => {
     };
 
     const deletePost = post => {
-        let token = getCookie('odinbook_api_token');
+        let token = getCookie('fakebook_api_token');
 
         const options = {
             method: 'POST',
