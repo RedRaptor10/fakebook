@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CommentForm from './CommentForm';
 import { getCookie } from '../helpers/cookies';
+import checkImage from '../helpers/checkImage';
+import defaultPhoto from '../assets/default-photo.jpg';
 import getElapsedTime from '../helpers/getElapsedTime';
 
 const Comment = ({user, post, comment, targetComment, setTargetComment, showCommentForm, setShowCommentForm, refreshToggle, setRefreshToggle}) => {
@@ -71,13 +73,13 @@ const Comment = ({user, post, comment, targetComment, setTargetComment, showComm
             :
                 <div className="comment">
                     <div className="comment-left">
-                        {comment.author.photo ?
+                        {comment.author.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + comment.author._id + '/' +
+                            comment.author.photo) ?
                             <img className="profile-photo"
-                                src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + comment.author._id + "/" + comment.author.photo}
-                                alt={comment.author.firstName + ' ' + comment.author.lastName} />
+                                src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + comment.author._id + '/' + comment.author.photo}
+                                alt="" />
                         :
-                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                                alt={comment.author.firstName + ' ' + comment.author.lastName} />}
+                            <img className="profile-photo" src={defaultPhoto} alt="" />}
                     </div>
                     <div className="comment-right">
                         <div className="comment-box">

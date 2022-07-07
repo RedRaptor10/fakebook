@@ -5,6 +5,8 @@ import PhotoForm from './PhotoForm';
 import ProfileForm from './ProfileForm';
 import Post from './Post';
 import PostForm from './PostForm';
+import checkImage from '../helpers/checkImage';
+import defaultPhoto from '../assets/default-photo.jpg';
 
 const Profile = ({user, setUser}) => {
     const { username } = useParams(); // Get profile username from url
@@ -139,11 +141,11 @@ const Profile = ({user, setUser}) => {
             <main id="profile">
                 <section id="profile-info">
                     <div id="profile-photo">
-                        {profile.photo ?
-                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + profile._id + "/" + profile.photo} alt={profile.firstName + ' ' + profile.lastName} />
+                        {profile.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + profile._id + '/' + profile.photo) ?
+                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + profile._id + '/' + profile.photo}
+                            alt="" />
                         :
-                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                                alt={user.firstName + ' ' + user.lastName} />}
+                            <img className="profile-photo" src={defaultPhoto} alt="" />}
                         {user._id === profile._id ?
                             <button id="edit-photo-btn" onClick={() => {
                                 document.body.classList.add('disable-scroll');
@@ -184,14 +186,12 @@ const Profile = ({user, setUser}) => {
                                         return (
                                             <Link key={friend._id} to={'/' + friend.username}>
                                                 <div className="profile-friend">
-                                                    {friend.photo ?
+                                                    {friend.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + friend._id + '/' + friend.photo) ?
                                                         <img className="profile-friend-photo"
-                                                            src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + friend._id + "/" + friend.photo}
-                                                            alt={friend.firstName + ' ' + friend.lastName} />
+                                                            src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + friend._id + '/' + friend.photo}
+                                                            alt="" />
                                                     :
-                                                        <img className="profile-friend-photo"
-                                                            src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                                                            alt={friend.firstName + ' ' + friend.lastName} />}
+                                                        <img className="profile-friend-photo" src={defaultPhoto} alt="" />}
                                                     <div className="profile-friend-name">
                                                         {friend.firstName + ' ' + friend.lastName}
                                                     </div>
@@ -207,12 +207,11 @@ const Profile = ({user, setUser}) => {
                         <div id="profile-posts-container">
                             {user._id === profile._id ?
                                 <div id="create-post-container">
-                                    {user.photo ?
-                                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + user._id + "/" + user.photo}
-                                        alt={user.firstName + ' ' + user.lastName} />
+                                    {user.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo) ?
+                                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo}
+                                        alt="" />
                                     :
-                                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                                            alt={user.firstName + ' ' + user.lastName} />}
+                                        <img className="profile-photo" src={defaultPhoto} alt="" />}
                                     <div id="create-post-btn" onClick={createPost}>What's on your mind, {user.firstName}?</div>
                                 </div>
                             : null}

@@ -1,5 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { deleteCookie } from '../helpers/cookies';
+import checkImage from '../helpers/checkImage';
+import defaultPhoto from '../assets/default-photo.jpg';
 
 const Header = ({user, setUser}) => {
     const navigate = useNavigate();
@@ -20,12 +22,11 @@ const Header = ({user, setUser}) => {
             </h1>
             <div id="header-items">
                 <Link to={'/' + user.username}>
-                    {user.photo ?
-                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + user._id + "/" + user.photo}
-                            alt={user.firstName + ' ' + user.lastName} />
+                    {user.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo) ?
+                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo}
+                            alt="" />
                     :
-                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                            alt={user.firstName + ' ' + user.lastName} />}
+                        <img className="profile-photo" src={defaultPhoto} alt="" />}
                 </Link>
                 <Link to={'/' + user.username} id="header-name">{user.firstName}</Link>
                 <button onClick={logOut}>Log Out</button>

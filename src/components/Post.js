@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
 import { getCookie } from '../helpers/cookies';
+import checkImage from '../helpers/checkImage';
+import defaultPhoto from '../assets/default-photo.jpg';
 import getElapsedTime from '../helpers/getElapsedTime';
 
 const Post = ({user, post, updatePost, deletePost}) => {
@@ -57,12 +59,11 @@ const Post = ({user, post, updatePost, deletePost}) => {
     return (
         <div id={'post-' + post._id} className="post">
             <div className="post-meta">
-                {post.author.photo ?
-                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + post.author._id + "/" + post.author.photo}
-                        alt={post.author.firstName + ' ' + post.author.lastName} />
+                {post.author.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + post.author._id + '/' + post.author.photo) ?
+                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + post.author._id + '/' + post.author.photo}
+                        alt="" />
                 :
-                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                        alt={post.author.firstName + ' ' + post.author.lastName} />}
+                    <img className="profile-photo" src={defaultPhoto} alt="" />}
                 <div>
                     <div className="post-author">
                         <Link to={'/' + post.author.username}>{post.author.firstName + ' ' + post.author.lastName}</Link>

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getCookie } from '../helpers/cookies';
+import checkImage from '../helpers/checkImage';
+import defaultPhoto from '../assets/default-photo.jpg';
 
 const Requests = ({user, setUser}) => {
     const [sent, setSent] = useState();
@@ -59,12 +61,11 @@ const Requests = ({user, setUser}) => {
                             return (
                                 <div key={request._id} className="requests-list-user">
                                     <div className="requests-list-info">
-                                        {request.photo ?
-                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + request._id + "/" + request.photo}
-                                                alt={request.firstName + ' ' + request.lastName} />
+                                        {request.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + request._id + '/' + request.photo) ?
+                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + request._id + '/' + request.photo}
+                                                alt="" />
                                         :
-                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                                                alt={request.firstName + ' ' + request.lastName} />}
+                                            <img className="profile-photo" src={defaultPhoto} alt="" />}
                                         <Link to={'/' + request.username}>
                                             <div className="requests-list-name">{request.firstName + ' ' + request.lastName}</div>
                                         </Link>
@@ -88,12 +89,11 @@ const Requests = ({user, setUser}) => {
                             return (
                                 <div key={request._id} className="requests-list-user">
                                     <div className="requests-list-info">
-                                        {request.photo ?
-                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + request._id + "/" + request.photo}
-                                                alt={request.firstName + ' ' + request.lastName} />
+                                        {request.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + request._id + '/' + request.photo) ?
+                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + request._id + '/' + request.photo}
+                                                alt="" />
                                         :
-                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                                                alt={request.firstName + ' ' + request.lastName} />}
+                                            <img className="profile-photo" src={defaultPhoto} alt="" />}
                                         <Link to={'/' + request.username}>
                                             <div className="requests-list-name">{request.firstName + ' ' + request.lastName}</div>
                                         </Link>

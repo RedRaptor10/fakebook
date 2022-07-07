@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import Post from './Post';
 import PostForm from './PostForm';
 import { getCookie } from '../helpers/cookies';
+import checkImage from '../helpers/checkImage';
+import defaultPhoto from '../assets/default-photo.jpg';
 
 const Timeline = ({user}) => {
     const [posts, setPosts] = useState();
@@ -59,12 +61,11 @@ const Timeline = ({user}) => {
     return (
         <div id="timeline">
             <div id="create-post-container">
-                {user.photo ?
-                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + user._id + "/" + user.photo}
-                    alt={user.firstName + ' ' + user.lastName} />
+                {user.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo) ?
+                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo}
+                    alt="" />
                 :
-                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                        alt={user.firstName + ' ' + user.lastName} />}
+                    <img className="profile-photo" src={defaultPhoto} alt="" />}
                 <div id="create-post-btn" onClick={createPost}>What's on your mind, {user.firstName}?</div>
             </div>
             <div id="profile-posts">

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getCookie } from '../helpers/cookies';
+import checkImage from '../helpers/checkImage';
+import defaultPhoto from '../assets/default-photo.jpg';
 
 const Contacts = ({user}) => {
     const [contacts, setContacts] = useState();
@@ -33,13 +35,12 @@ const Contacts = ({user}) => {
                         return (
                             <li key={contact._id}>
                                 <Link to={'/' + contact.username}>
-                                    {contact.photo ?
+                                    {contact.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + contact._id + '/' + contact.photo) ?
                                         <img className="profile-photo"
-                                            src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + contact._id + "/" + contact.photo}
-                                            alt={contact.firstName + ' ' + contact.lastName} />
+                                            src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + contact._id + '/' + contact.photo}
+                                            alt="" />
                                     :
-                                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                                            alt={contact.firstName + ' ' + contact.lastName} />}
+                                        <img className="profile-photo" src={defaultPhoto} alt="" />}
                                     <span>{contact.firstName + ' ' + contact.lastName}</span>
                                 </Link>
                             </li>

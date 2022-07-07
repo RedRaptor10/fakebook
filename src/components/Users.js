@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getCookie } from '../helpers/cookies';
+import checkImage from '../helpers/checkImage';
+import defaultPhoto from '../assets/default-photo.jpg';
 
 const Users = ({user, setUser}) => {
     const [users, setUsers] = useState();
@@ -59,12 +61,11 @@ const Users = ({user, setUser}) => {
                             u._id !== user._id ?
                                 <div key={u._id} className="users-list-user">
                                     <div className="users-list-info">
-                                        {u.photo ?
-                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + u._id + "/" + u.photo}
-                                                alt={u.firstName + ' ' + u.lastName} />
+                                        {u.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + u._id + '/' + u.photo) ?
+                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + u._id + '/' + u.photo}
+                                                alt="" />
                                         :
-                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                                                alt={u.firstName + ' ' + u.lastName} />}
+                                            <img className="profile-photo" src={defaultPhoto} alt="" />}
                                         <Link to={'/' + u.username}>
                                             <div className="users-list-name">{u.firstName + ' ' + u.lastName}</div>
                                         </Link>

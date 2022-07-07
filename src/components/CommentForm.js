@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getCookie } from '../helpers/cookies';
+import checkImage from '../helpers/checkImage';
+import defaultPhoto from '../assets/default-photo.jpg';
 
 const CommentForm = ({user, post, comment, refreshToggle, setRefreshToggle }) => {
     const [form, setForm] = useState({ content: '' });
@@ -75,12 +77,11 @@ const CommentForm = ({user, post, comment, refreshToggle, setRefreshToggle }) =>
 
     return (
         <form className="comment-form" action="">
-            {user.photo ?
-                <img className="profile-photo" src={process.env.REACT_APP_SERVER + "/uploads/profile-photos/" + user._id + "/" + user.photo}
-                alt={user.firstName + ' ' + user.lastName} />
+            {user.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo) ?
+                <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo}
+                alt="" />
             :
-                <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/default.jpg'}
-                    alt={user.firstName + ' ' + user.lastName} />}
+                <img className="profile-photo" src={defaultPhoto} alt="" />}
             <input className="comment-form-input" type="text" name="content"
                 placeholder="Write a comment..." value={form.content} onChange={handleChange} onKeyDown={submitComment} />
             {formErrors ?
