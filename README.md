@@ -1,10 +1,10 @@
-# Odinbook
+# Fakebook
 
-Odinbook app created in NodeJS using Express through [TheOdinProject](https://www.theodinproject.com) online course. A clone of a popular website.
+Fakebook is a clone of a popular social media website created in NodeJS using Express.
 
-**Server** - [View Repo](https://github.com/RedRaptor10/odinbook-api/)
+**Server** - [View Repo](https://github.com/RedRaptor10/fakebook-api/)
 
-**Client** - [View Demo](https://redraptor10.github.io/odinbook/) | [View Repo](https://github.com/RedRaptor10/odinbook/)
+**Client** - [View Demo](https://redraptor10.github.io/fakebook/) | [View Repo](https://github.com/RedRaptor10/fakebook/)
 
 ![Odinbook](/src/assets/preview.jpg)
 
