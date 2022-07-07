@@ -10,7 +10,7 @@ Fakebook is a clone of a popular social media website created in NodeJS using Ex
 
 # User Credentials
 
-To use the app, log-in with any of the existing accounts below or create your own account.
+To use the app, click on "Use a Sample Account". You may also log-in with any of the existing accounts below or create your own account.
 
 - Email: admin@admin.com | Password: admin
 - Email: test@test.com | Password: testuser
