@@ -8,11 +8,41 @@ const LogInForm = ({setUser}) => {
     });
     const [logInErrors, setLogInErrors] = useState([]);
     const [showSignUpForm, setShowSignUpForm] = useState(false);
+    const sampleAccount = {
+        email: 'johndoe@johndoe.com',
+        password: 'johndoe'
+    };
 
     const handleLogInChange = event => {
         setLogInForm({
             ...logInForm,
             [event.target.name]: event.target.value
+        });
+    };
+
+    const sampleLogIn = event => {
+        event.preventDefault();
+
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: sampleAccount.email,
+                password: sampleAccount.password
+            }),
+            mode: 'cors'
+        };
+
+        fetch(process.env.REACT_APP_SERVER + 'api/log-in', options)
+        .then(function(res) { return res.json(); })
+        .then(function(res) {
+            if (res.errors) { setLogInErrors(res.errors); } // Email/password required
+            else if (!res.user) { setLogInErrors([{ msg: res.info.message }]); } // Incorrect email/password
+            else {
+                // Success. Set token as a cookie and set user
+                document.cookie = 'fakebook_api_token=' + res.token + '; SameSite=Lax; path=/';
+                setUser(res.user);
+            }
         });
     };
 
@@ -67,6 +97,7 @@ const LogInForm = ({setUser}) => {
                             document.body.classList.add('disable-scroll');
                             setShowSignUpForm(true);
                         }}>Create new account</button>
+                        <button className="btn btn-yellow" type="submit" name="sampleLogIn" onClick={sampleLogIn}>Use a Sample Account</button>
                     </form>
                 </div>
             </div>

@@ -109,6 +109,14 @@ button {
   background-color: #36a420;
 }
 
+.btn-yellow {
+  background-color: #f2b118;
+}
+
+.btn-yellow:hover {
+  background-color: #e3a614;
+}
+
 .btn-red {
   background-color: #f03c24;
 }
@@ -181,14 +189,12 @@ footer {
 #log-in-form-container {
   display: flex;
   align-items: center;
-  width: 50%;
   margin: 64px auto;
 }
 
 #log-in-form-left {
   width: 50%;
-  margin: 64px auto;
-  box-sizing: border-box;
+  margin-right: 32px;
 }
 
 #log-in-form-left h1 {
@@ -199,12 +205,11 @@ footer {
 
 #log-in-form-left h2 {
   font-weight: normal;
+  line-height: 32px;
 }
 
 #log-in-form-right {
   width: 50%;
-  margin: 64px auto;
-  box-sizing: border-box;
 }
 
 #log-in-form {
