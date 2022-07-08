@@ -685,6 +685,10 @@ main {
   margin: auto 0 0 auto;
 }
 
+#profile-btns button {
+  margin-left: 16px;
+}
+
 #profile hr {
   color: #fff;
 }
