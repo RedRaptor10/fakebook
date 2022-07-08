@@ -68,7 +68,7 @@ const App = () => {
               user ? <Requests user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />
             } />
           </Routes>
-          <Footer />
+          {!user ? <Footer /> : null}
         </HashRouter>
       : null
   );
