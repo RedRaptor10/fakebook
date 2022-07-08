@@ -130,10 +130,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    position: fixed;
+    width: 100%;
     height: 10vh;
+    background: var(--background-color);
     padding: 0 32px;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
 }
 
 header h1 a {
@@ -186,6 +189,10 @@ footer {
 }
 
 /* Log-in Form */
+#log-in-page {
+  padding: 0;
+}
+
 #log-in-form-container {
   display: flex;
   align-items: center;
@@ -386,6 +393,7 @@ main {
     display: flex;
     background: #f0f2f5;
     min-height: 90vh;
+    padding-top: 10vh;
 }
 
 .profile-photo {
@@ -648,7 +656,7 @@ main {
   width: 75%;
   height: 100%;
   margin: 0 auto;
-  padding: 32px;
+  padding: calc(10vh + 32px) 32px 32px 32px;
   box-sizing: border-box;
 }
 
@@ -657,8 +665,8 @@ main {
 }
 
 #profile-info .profile-photo {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
 }
 
 #edit-photo-btn {
@@ -751,7 +759,7 @@ main {
   width: 75%;
   height: 100%;
   margin: 0 auto;
-  padding: 32px;
+  padding: calc(10vh + 32px) 32px 32px 32px;
   box-sizing: border-box;
 }
 
