@@ -61,11 +61,13 @@ const Requests = ({user, setUser}) => {
                             return (
                                 <div key={request._id} className="requests-list-user">
                                     <div className="requests-list-info">
-                                        {request.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + request._id + '/' + request.photo) ?
-                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + request._id + '/' + request.photo}
-                                                alt="" />
-                                        :
-                                            <img className="profile-photo" src={defaultPhoto} alt="" />}
+                                        <Link to={'/' + request.username}>
+                                            {request.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + request._id + '/' + request.photo) ?
+                                                <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + request._id + '/' + request.photo}
+                                                    alt="" />
+                                            :
+                                                <img className="profile-photo" src={defaultPhoto} alt="" />}
+                                        </Link>
                                         <Link to={'/' + request.username}>
                                             <div className="requests-list-name">{request.firstName + ' ' + request.lastName}</div>
                                         </Link>

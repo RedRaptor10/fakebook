@@ -61,11 +61,13 @@ const Users = ({user, setUser}) => {
                             u._id !== user._id ?
                                 <div key={u._id} className="users-list-user">
                                     <div className="users-list-info">
-                                        {u.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + u._id + '/' + u.photo) ?
-                                            <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + u._id + '/' + u.photo}
-                                                alt="" />
-                                        :
-                                            <img className="profile-photo" src={defaultPhoto} alt="" />}
+                                        <Link to={'/' + u.username}>
+                                            {u.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + u._id + '/' + u.photo) ?
+                                                <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + u._id + '/' + u.photo}
+                                                    alt="" />
+                                            :
+                                                <img className="profile-photo" src={defaultPhoto} alt="" />}
+                                        </Link>
                                         <Link to={'/' + u.username}>
                                             <div className="users-list-name">{u.firstName + ' ' + u.lastName}</div>
                                         </Link>
