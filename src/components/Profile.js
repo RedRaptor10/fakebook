@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { getCookie } from '../helpers/cookies';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { getCookie, deleteCookie } from '../helpers/cookies';
 import PhotoForm from './PhotoForm';
 import ProfileForm from './ProfileForm';
 import Post from './Post';
@@ -19,6 +19,10 @@ const Profile = ({user, setUser}) => {
     const [showPostForm, setShowPostForm] = useState(false);
     const [targetPost, setTargetPost] = useState();
     const [refreshToggle, setRefreshToggle] = useState(false);
+    const navigate = useNavigate();
+    const sampleAccount = {
+        email: 'johndoe@johndoe.com'
+    };
 
     // Get Profile
     useEffect(() => {
@@ -136,6 +140,24 @@ const Profile = ({user, setUser}) => {
         });
     };
 
+    const deleteAccount = () => {
+        let token = getCookie('fakebook_api_token');
+
+        const options = {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + token },
+            mode: 'cors'
+        };
+
+        fetch(process.env.REACT_APP_SERVER + 'api/users/' + user.username + '/delete', options)
+        .then(function(res) { return res.json(); })
+        .then(function() {
+            setUser();
+            deleteCookie('fakebook_api_token');
+            navigate('/');
+        });
+    };
+
     return (
         profile ?
             <main id="profile">
@@ -157,23 +179,28 @@ const Profile = ({user, setUser}) => {
                         <h1>{profile.firstName + ' ' + profile.lastName}</h1>
                         <h3>{profile.friends.length + (profile.friends.length === 1 ? ' Friend' : ' Friends')}</h3>
                     </div>
-                    <div id="profile-btns">
-                        {user._id === profile._id ?
+                    {user._id === profile._id ?
+                        <div id="profile-btns">
                             <button className="btn btn-blue" onClick={() => {
                                 document.body.classList.add('disable-scroll');
                                 setShowProfileForm(true);
                             }}>Edit profile</button>
-                        :
-                            profile.friends.includes(user._id) ? <button className="btn btn-blue" onClick={() => { handleRequest('delete') }}>Delete Friend</button> :
-                                profile.requests.received.includes(user._id) ? <button className="btn btn-blue" onClick={() => { handleRequest('deleteSent') }}>Cancel Friend Request</button> :
+                            {user.email !== sampleAccount.email ?
+                                <button className="btn btn-red" onClick={deleteAccount}>Delete Account</button>
+                            : null}
+                        </div>
+                    :
+                        <div id="profile-btns">
+                            {profile.friends.includes(user._id) ? <button className="btn btn-red" onClick={() => { handleRequest('delete') }}>Delete Friend</button> :
+                                profile.requests.received.includes(user._id) ? <button className="btn btn-red" onClick={() => { handleRequest('deleteSent') }}>Cancel Friend Request</button> :
                                     profile.requests.sent.includes(user._id) ?
                                     <div>
                                         <button className="btn btn-blue" onClick={() => { handleRequest('add') }}>Accept Request</button>
-                                        <button className="btn btn-blue" onClick={() => { handleRequest('deleteReceived') }}>Delete Request</button>
+                                        <button className="btn btn-red" onClick={() => { handleRequest('deleteReceived') }}>Delete Request</button>
                                     </div>
                                 :
                                     <button className="btn btn-blue" onClick={() => { handleRequest('send') }}>Add Friend</button>}
-                    </div>
+                        </div>}
                 </section>
                 <hr />
                 <section id="profile-main">
