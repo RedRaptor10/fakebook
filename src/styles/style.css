@@ -163,6 +163,11 @@ header .profile-photo {
   margin-right: 32px;
   color: #000;
   font-weight: bold;
+  transition: 0.1s;
+}
+
+#header-name:hover {
+  color: var(--link-color);
 }
 
 header button {
@@ -170,6 +175,11 @@ header button {
   color: var(--primary-color);
   font-size: 16px;
   font-weight: bold;
+  transition: 0.1s;
+}
+
+header button:hover {
+  color: #3a8bf4;
 }
 
 /* Footer */
@@ -753,6 +763,10 @@ main {
 #profile-posts-container {
   width: calc((100% / 3) * 2);
   padding: 16px;
+}
+
+#profile-no-posts {
+  margin: 16px 0;
 }
 
 #profile-private {
