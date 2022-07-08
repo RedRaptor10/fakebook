@@ -2,24 +2,22 @@
 
 Fakebook is a clone of a popular social media website created in NodeJS using Express.
 
-**Server** - [View Repo](https://github.com/RedRaptor10/fakebook-api/)
+[View Demo](https://redraptor10.github.io/fakebook/)
 
-**Client** - [View Demo](https://redraptor10.github.io/fakebook/) | [View Repo](https://github.com/RedRaptor10/fakebook/)
+**Server** - [View Repo](https://github.com/RedRaptor10/fakebook-api/)
 
 ![Fakebook](/src/assets/preview.jpg)
 
-# User Credentials
+# Credentials
 
-To use the app, click on "Use a Sample Account". You may also log-in with any of the existing accounts below or create your own account.
+To use the app, click on "Use a Sample Account". You may also log in with any of the existing accounts below or create your own account.
 
-- Email: admin@admin.com | Password: admin
-- Email: test@test.com | Password: testuser
 - Email: johndoe@johndoe.com | Password: johndoe
 - Email: janedoe@janedoe.com | Password: janedoe
+- Email: test@test.com | Password: testuser
 
 # Features
 
-- Provide a back-end API server to be called from the client
 - Sign up with an account and save login info via tokens
 - Log in/out via authentication
 - Secure user data by hashing passwords
