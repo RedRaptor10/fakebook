@@ -73,13 +73,15 @@ const Comment = ({user, post, comment, targetComment, setTargetComment, showComm
             :
                 <div className="comment">
                     <div className="comment-left">
-                        {comment.author.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + comment.author._id + '/' +
-                            comment.author.photo) ?
-                            <img className="profile-photo"
-                                src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + comment.author._id + '/' + comment.author.photo}
-                                alt="" />
-                        :
-                            <img className="profile-photo" src={defaultPhoto} alt="" />}
+                        <Link to={'/' + comment.author.username}>
+                            {comment.author.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + comment.author._id + '/' +
+                                comment.author.photo) ?
+                                <img className="profile-photo"
+                                    src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + comment.author._id + '/' + comment.author.photo}
+                                    alt="" />
+                            :
+                                <img className="profile-photo" src={defaultPhoto} alt="" />}
+                        </Link>
                     </div>
                     <div className="comment-right">
                         <div className="comment-box">

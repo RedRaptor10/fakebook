@@ -59,11 +59,13 @@ const Post = ({user, post, updatePost, deletePost}) => {
     return (
         <div id={'post-' + post._id} className="post">
             <div className="post-meta">
-                {post.author.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + post.author._id + '/' + post.author.photo) ?
-                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + post.author._id + '/' + post.author.photo}
-                        alt="" />
-                :
-                    <img className="profile-photo" src={defaultPhoto} alt="" />}
+                <Link to={'/' + post.author.username}>
+                    {post.author.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + post.author._id + '/' + post.author.photo) ?
+                        <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + post.author._id + '/' + post.author.photo}
+                            alt="" />
+                    :
+                        <img className="profile-photo" src={defaultPhoto} alt="" />}
+                </Link>
                 <div>
                     <div className="post-author">
                         <Link to={'/' + post.author.username}>{post.author.firstName + ' ' + post.author.lastName}</Link>
