@@ -14,6 +14,9 @@ const ProfileForm = ({user, setUser, profile, setShowProfileForm }) => {
     });
     const [formErrors, setFormErrors] = useState();
     const navigate = useNavigate();
+    const sampleAccount = {
+        email: 'johndoe@johndoe.com'
+    };
 
     const handleChange = event => {
         setForm({
@@ -24,6 +27,11 @@ const ProfileForm = ({user, setUser, profile, setShowProfileForm }) => {
 
     const submitProfile = event => {
         event.preventDefault();
+
+        if (user.email === sampleAccount.email) {
+            setFormErrors([{msg: 'Sample account cannot be edited.'}]);
+            return;
+        }
 
         let token = getCookie('fakebook_api_token');
 
