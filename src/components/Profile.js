@@ -244,7 +244,7 @@ const Profile = ({user, setUser}) => {
                             : null}
                             <h2>Posts</h2>
                             <div id="profile-posts">
-                                {posts ?
+                                {posts && posts.length > 0 ?
                                     posts.map(post => {
                                         return (
                                             user._id === profile._id || post.public ?
@@ -252,7 +252,7 @@ const Profile = ({user, setUser}) => {
                                             : null
                                         )
                                     })
-                                : null}
+                                : <div id="profile-no-posts">This user has no posts.</div>}
                             </div>
                         </div>
                     :
