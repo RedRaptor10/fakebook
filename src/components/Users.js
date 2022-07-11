@@ -4,7 +4,7 @@ import { getCookie } from '../helpers/cookies';
 import checkImage from '../helpers/checkImage';
 import defaultPhoto from '../assets/default-photo.jpg';
 
-const Users = ({user, setUser}) => {
+const Users = ({user, setUser, darkMode}) => {
     const [users, setUsers] = useState();
 
     // Get Users
@@ -52,7 +52,7 @@ const Users = ({user, setUser}) => {
     };
 
     return (
-        <main id="users">
+        <main id="users" class={darkMode ? 'dark' : null}>
             <h1>Find Friends</h1>
             {users ?
                 <div id="users-list">

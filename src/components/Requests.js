@@ -4,7 +4,7 @@ import { getCookie } from '../helpers/cookies';
 import checkImage from '../helpers/checkImage';
 import defaultPhoto from '../assets/default-photo.jpg';
 
-const Requests = ({user, setUser}) => {
+const Requests = ({user, setUser, darkMode}) => {
     const [sent, setSent] = useState();
     const [received, setReceived] = useState();
     const [type, setType] = useState('received');
@@ -52,7 +52,7 @@ const Requests = ({user, setUser}) => {
 
     return (
         type === 'sent' ?
-            <main id="requests-sent">
+            <main id="requests-sent" className={darkMode ? 'dark' : null}>
                 <h1>Sent Requests</h1>
                 <button id="change-view-btn" onClick={() => { setType('received') }}>View Received Requests</button>
                 {sent ?
@@ -82,7 +82,7 @@ const Requests = ({user, setUser}) => {
                 : null}
             </main>
         :
-            <main id="requests-received">
+            <main id="requests-received" className={darkMode ? 'dark' : null}>
                 <h1>Received Requests</h1>
                 <button id="change-view-btn" onClick={() => { setType('sent') }}>View Sent Requests</button>
                 {received ?

@@ -12,6 +12,7 @@ import { getCookie, deleteCookie } from '../helpers/cookies';
 const App = () => {
   const [user, setUser] = useState();
   const [loaded, setLoaded] = useState(false); // Page loaded, required so that app renders a blank page before authorization
+  const [darkMode, setDarkMode] = useState(false);
 
   // Check authorization on mount
   useEffect(() => {
@@ -54,18 +55,18 @@ const App = () => {
   return (
       loaded ?
         <HashRouter>
-          {user ? <Header user={user} setUser={setUser} /> : null}
+          {user ? <Header user={user} setUser={setUser} darkMode={darkMode} setDarkMode={setDarkMode} /> : null}
           <Routes>
             <Route exact path="/" element={
-              user ? <Home user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />} />
+              user ? <Home user={user} setUser={setUser} darkMode={darkMode} /> : <LogInForm setUser={setUser} />} />
             <Route exact path="/:username" element={
-              user ? <Profile user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />
+              user ? <Profile user={user} setUser={setUser} darkMode={darkMode} /> : <LogInForm setUser={setUser} />
             } />
             <Route exact path="/users" element={
-              user ? <Users user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />
+              user ? <Users user={user} setUser={setUser} darkMode={darkMode} /> : <LogInForm setUser={setUser} />
             } />
             <Route exact path="/friends/requests" element={
-              user ? <Requests user={user} setUser={setUser} /> : <LogInForm setUser={setUser} />
+              user ? <Requests user={user} setUser={setUser} darkMode={darkMode} /> : <LogInForm setUser={setUser} />
             } />
           </Routes>
           {!user ? <Footer /> : null}

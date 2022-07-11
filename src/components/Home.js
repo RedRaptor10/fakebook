@@ -2,9 +2,9 @@ import Sidebar from './Sidebar';
 import Timeline from './Timeline';
 import Contacts from './Contacts';
 
-const Home = ({user}) => {
+const Home = ({user, darkMode}) => {
     return (
-        <main id="home">
+        <main id="home" className={darkMode ? 'dark' : null}>
             <Sidebar user={user} />
             <Timeline user={user} />
             <Contacts user={user} />

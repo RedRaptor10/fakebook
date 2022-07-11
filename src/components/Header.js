@@ -3,7 +3,7 @@ import { deleteCookie } from '../helpers/cookies';
 import checkImage from '../helpers/checkImage';
 import defaultPhoto from '../assets/default-photo.jpg';
 
-const Header = ({user, setUser}) => {
+const Header = ({user, setUser, darkMode, setDarkMode}) => {
     const navigate = useNavigate();
 
     const logOut = () => {
@@ -15,21 +15,31 @@ const Header = ({user, setUser}) => {
         });
     };
 
+    const toggleDarkMode = () => {
+        darkMode ? setDarkMode(false) : setDarkMode(true);
+    };
+
     return (
-        <header>
+        <header className={darkMode ? 'dark' : null}>
             <h1>
                 <Link to="/">fakebook</Link>
             </h1>
             <div id="header-items">
-                <Link to={'/' + user.username}>
+                <div id="dark-mode-btn-container" onClick={toggleDarkMode}>
+                    <button id="dark-mode-btn" type="button">
+                        <div id="dark-mode-btn-switch"></div>
+                    </button>
+                    <span>Dark Mode</span>
+                </div>
+                <Link to={'/' + user.username} id="header-name">
                     {user.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo) ?
                         <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo}
                             alt="" />
                     :
                         <img className="profile-photo" src={defaultPhoto} alt="" />}
+                    {user.firstName}
                 </Link>
-                <Link to={'/' + user.username} id="header-name">{user.firstName}</Link>
-                <button onClick={logOut}>Log Out</button>
+                <button id="log-out-btn" onClick={logOut}>Log Out</button>
             </div>
         </header>
     );

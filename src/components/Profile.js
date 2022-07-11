@@ -8,7 +8,7 @@ import PostForm from './PostForm';
 import checkImage from '../helpers/checkImage';
 import defaultPhoto from '../assets/default-photo.jpg';
 
-const Profile = ({user, setUser}) => {
+const Profile = ({user, setUser, darkMode}) => {
     const { username } = useParams(); // Get profile username from url
     const [userId, setUserId] = useState();
     const [profile, setProfile] = useState();
@@ -160,7 +160,7 @@ const Profile = ({user, setUser}) => {
 
     return (
         profile ?
-            <main id="profile">
+            <main id="profile" className={darkMode ? 'dark' : null}>
                 <section id="profile-info">
                     <div id="profile-photo">
                         {profile.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + profile._id + '/' + profile.photo) ?

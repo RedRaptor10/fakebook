@@ -51,8 +51,13 @@ table {
 :root {
   --primary-color: #1877f2;
   --background-color: #fff;
+  --background-color-dark: rgb(48, 48, 48);
+  --background-secondary-color: rgb(240, 245, 245);
+  --background-secondary-color-dark: rgb(64, 64, 64);
   --color: #1c1e21;
+  --color-dark: rgb(224, 224, 224);
   --link-color: #8a8d91;
+  --link-color-dark: #fff;
 }
 
 body {
@@ -153,6 +158,39 @@ header a:hover {
   align-items: center;
 }
 
+#dark-mode-btn-container {
+  display: flex;
+  align-items: center;
+  margin-right: 32px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#dark-mode-btn {
+  background: rgb(224, 224, 224);
+  width: 48px;
+  height: 24px;
+  margin-right: 8px;
+	border-radius: 100px;
+	transition: border-color 0.15s linear, background-color 0.15s linear;
+}
+
+#dark-mode-btn-switch {
+	background-color: #fff;
+	position: relative;
+	left: 0;
+  width: 24px;
+  height: 100%;
+	border-radius: 50%;
+	box-shadow: 0 0 0 1px rgba(0 ,0, 0, 0.1), 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+	transition: left 0.25s linear;
+}
+
+#dark-mode-btn-switch::after {
+	content: "";
+	display: block;
+}
+
 header .profile-photo {
   width: 32px;
   height: 32px;
@@ -160,6 +198,8 @@ header .profile-photo {
 }
 
 #header-name {
+  display: flex;
+  align-items: center;
   margin-right: 32px;
   color: #000;
   font-weight: bold;
@@ -170,7 +210,7 @@ header .profile-photo {
   color: var(--link-color);
 }
 
-header button {
+#log-out-btn {
   background: none;
   color: var(--primary-color);
   font-size: 16px;
@@ -178,7 +218,7 @@ header button {
   transition: 0.1s;
 }
 
-header button:hover {
+#log-out-btn:hover {
   color: #3a8bf4;
 }
 
@@ -417,7 +457,7 @@ main {
 /* Sidebar / Contacts */
 #sidebar, #contacts {
     position: fixed;
-    background: rgb(240, 245, 245);
+    background: var(--background-secondary-color);
     width: 25%;
     min-height: 90vh;
     box-sizing: border-box;
@@ -502,7 +542,7 @@ main {
 #create-post-container #create-post-btn {
   display: flex;
   align-items: center;
-  background: rgb(240, 245, 245);
+  background: var(--background-secondary-color);
   width: 100%;
   height: 48px;
   border-radius: 16px;
@@ -572,7 +612,7 @@ main {
 }
 
 .post-btns button:hover {
-  background: rgb(240, 245, 245);
+  background: var(--background-secondary-color);
   border-radius: 8px;
 }
 
@@ -592,7 +632,7 @@ main {
 .comment-form input {
   display: flex;
   align-items: center;
-  background: rgb(240, 245, 245);
+  background: var(--background-secondary-color);
   width: 100%;
   height: 48px;
   border: 0;
@@ -622,7 +662,7 @@ main {
 }
 
 .comment-box {
-  background: rgb(240, 245, 245);
+  background: var(--background-secondary-color);
   width: 100%;
   padding: 8px;
   border-radius: 16px;
@@ -675,10 +715,11 @@ main {
 /* Profile */
 #profile {
   display: block;
-  width: 75%;
+  width: 100%;
   height: 100%;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: calc(10vh + 32px) 32px 32px 32px;
+  padding: calc(10vh + 32px) calc(12.5% + 32px) 32px calc(12.5% + 32px);
   box-sizing: border-box;
 }
 
@@ -781,11 +822,11 @@ main {
 /* Users / Requests */
 #users, #requests-sent, #requests-received {
   display: block;
-  background: none;
-  width: 75%;
+  width: 100%;
   height: 100%;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: calc(10vh + 32px) 32px 32px 32px;
+  padding: calc(10vh + 32px) calc(12.5% + 32px) 32px calc(12.5% + 32px);
   box-sizing: border-box;
 }
 
@@ -811,7 +852,7 @@ main {
 .users-list-user, .requests-list-user {
   display: flex;
   flex-direction: column;
-  background: rgb(240, 245, 245);
+  background: var(--background-secondary-color);
   width: calc(50% - 16px);
   padding: 8px;
   border-radius: 8px;
@@ -842,4 +883,154 @@ main {
 
 .users-list-btns button, .requests-list-btns button {
   margin: 0 8px;
+}
+
+/* Dark Mode */
+header.dark {
+  background: var(--background-color-dark);
+}
+
+header.dark #dark-mode-btn-container {
+  color: var(--link-color-dark);
+}
+
+header.dark #dark-mode-btn {
+  background: var(--primary-color);
+}
+
+header.dark #dark-mode-btn-switch {
+	left: 24px;
+}
+
+header.dark #header-name {
+  color: var(--color-dark);
+}
+
+header.dark #header-name:hover {
+  color: var(--link-color-dark);
+}
+
+main.dark {
+  background: rgb(96, 96, 96);
+}
+
+main.dark #sidebar, main.dark #contacts {
+  background: var(--background-secondary-color-dark);
+  color: var(--color-dark);
+}
+
+main.dark #sidebar a, main.dark #contacts a {
+  color: var(--color-dark);
+}
+
+main.dark #sidebar li:hover, main.dark #contacts li:hover {
+  background: rgb(96, 96, 96);
+}
+
+main.dark #create-post-container {
+  background: var(--background-color-dark);
+}
+
+main.dark #create-post-container #create-post-btn {
+  background: var(--background-secondary-color-dark);
+  color: var(--color-dark);
+}
+
+main.dark .overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+main.dark .form, main.dark .form input, main.dark .form textarea {
+  background: var(--background-secondary-color-dark);
+  color: var(--color-dark);
+}
+
+main.dark .post {
+  background: var(--background-color-dark);
+  color: var(--color-dark);
+}
+
+main.dark .post-author a {
+  color: var(--link-color-dark);
+}
+
+main.dark .post-date-public {
+  color: var(--color-dark);
+}
+
+main.dark .post-btns button {
+  color: var(--link-color-dark);
+}
+
+main.dark .post-btns button:hover {
+  background: var(--background-secondary-color-dark);
+}
+
+main.dark .post-likes {
+  color: var(--link-color-dark);
+}
+
+main.dark .comment-form input {
+  background: var(--background-secondary-color-dark);
+  color: var(--color-dark);
+}
+
+main.dark .comment-box {
+  background: var(--background-secondary-color-dark);
+}
+
+main.dark .comment-author a {
+  color: var(--link-color-dark);
+}
+
+main.dark .comment-btns button {
+  color: var(--link-color-dark);
+}
+
+main.dark .comment-date {
+  color: var(--link-color-dark);
+}
+
+main.dark #profile-name h1 {
+  color: var(--link-color-dark);
+}
+
+main.dark #profile-name h3 {
+  color: var(--color-dark);
+}
+
+main.dark #edit-photo-btn {
+  color: var(--link-color-dark);
+}
+
+main.dark #profile-friends h2 {
+  color: var(--link-color-dark);
+}
+
+main.dark .profile-friend-name {
+  color: var(--link-color-dark);
+}
+
+main.dark #profile-posts-container h2 {
+  color: var(--link-color-dark);
+}
+
+main.dark #profile-no-posts {
+  color: var(--color-dark);
+}
+
+main.dark h1 {
+  color: var(--link-color-dark);
+}
+
+main.dark .users-list-user, main.dark .requests-list-user {
+  background: var(--background-secondary-color-dark);
+}
+
+main.dark .users-list-name, main.dark .requests-list-name {
+  color: var(--link-color-dark);
+}
+
+#requests-sent.dark #change-view-btn, #requests-received.dark #change-view-btn {
+  color: var(--link-color-dark);
 }
