@@ -133,7 +133,6 @@ button {
 /* Header */
 header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     position: fixed;
     width: 100%;
@@ -153,9 +152,14 @@ header a:hover {
   text-decoration: none;
 }
 
+#search-box {
+  margin-left: 32px;
+}
+
 #header-items {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
 #dark-mode-btn-container {
@@ -832,6 +836,39 @@ main {
 }
 
 /* Search */
+#search-box {
+  display: flex;
+  align-items: center;
+  background: var(--background-secondary-color);
+  width: 256px;
+  height: 48px;
+  border: 0;
+  border-radius: 16px;
+  padding: 0 8px;
+  color: var(--color);
+}
+
+#search-box form {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+#search-box .svg-inline--fa {
+  position: absolute;
+}
+
+#search-box input {
+  background: none;
+  width: 256px;
+  height: 100%;
+  padding-left: 24px;
+  border: 0;
+  border-radius: 16px;
+  color: var(--color);
+  font-size: 16px;
+}
+
 #search-results {
   width: 50%;
   height: 100%;
@@ -913,6 +950,15 @@ main {
 /* Dark Mode */
 header.dark {
   background: var(--background-color-dark);
+}
+
+header.dark #search-box {
+  background: var(--background-secondary-color-dark);
+  color: var(--color-dark);
+}
+
+header.dark #search-box input {
+  color: var(--color-dark);
 }
 
 header.dark #dark-mode-btn-container {
