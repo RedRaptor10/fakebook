@@ -5,6 +5,7 @@ import Footer from './Footer';
 import LogInForm from './LogInForm';
 import Home from './Home';
 import Profile from './Profile';
+import Search from './Search';
 import Users from './Users';
 import Requests from './Requests';
 import { getCookie, deleteCookie } from '../helpers/cookies';
@@ -58,9 +59,12 @@ const App = () => {
           {user ? <Header user={user} setUser={setUser} darkMode={darkMode} setDarkMode={setDarkMode} /> : null}
           <Routes>
             <Route exact path="/" element={
-              user ? <Home user={user} setUser={setUser} darkMode={darkMode} /> : <LogInForm setUser={setUser} />} />
+              user ? <Home user={user} darkMode={darkMode} /> : <LogInForm setUser={setUser} />} />
             <Route exact path="/:username" element={
               user ? <Profile user={user} setUser={setUser} darkMode={darkMode} /> : <LogInForm setUser={setUser} />
+            } />
+            <Route exact path="/search/:category" element={
+              user ? <Search user={user} darkMode={darkMode} /> : <LogInForm setUser={setUser} />
             } />
             <Route exact path="/users" element={
               user ? <Users user={user} setUser={setUser} darkMode={darkMode} /> : <LogInForm setUser={setUser} />

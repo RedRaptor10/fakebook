@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 import Post from './Post';
 import PostForm from './PostForm';
 import { getCookie } from '../helpers/cookies';
-import checkImage from '../helpers/checkImage';
-import defaultPhoto from '../assets/default-photo.jpg';
 
-const Timeline = ({user}) => {
+const Search = ({user, darkMode}) => {
+    const { category } = useParams();
+    const [searchParams] = useSearchParams();
+    const query = searchParams.get('q');
     const [posts, setPosts] = useState();
     const [showPostForm, setShowPostForm] = useState(false);
     const [targetPost, setTargetPost] = useState();
     const [refreshToggle, setRefreshToggle] = useState(false);
 
-    // Get Posts
+    // Get Search Results
     useEffect(() => {
         let token = getCookie('fakebook_api_token');
 
@@ -21,20 +23,14 @@ const Timeline = ({user}) => {
             mode: 'cors'
         };
 
-        fetch(process.env.REACT_APP_SERVER + 'api/posts/timeline/' + user._id + '?sort=date&order=desc', options)
+        fetch(process.env.REACT_APP_SERVER + 'api/search/' + category + '?q=' + query, options)
         .then(function(res) {
             return res.json();
         })
         .then(function(res) {
             setPosts(res);
         });
-    }, [user._id, refreshToggle]);
-
-    const createPost = () => {
-        document.body.classList.add('disable-scroll');
-        setTargetPost();
-        setShowPostForm(true);
-    };
+    }, [user._id, refreshToggle, category, query]);
 
     const updatePost = post => {
         document.body.classList.add('disable-scroll');
@@ -59,17 +55,10 @@ const Timeline = ({user}) => {
     };
 
     return (
-        <div id="timeline">
-            <div id="create-post-container">
-                {user.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo) ?
-                    <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo}
-                    alt="" />
-                :
-                    <img className="profile-photo" src={defaultPhoto} alt="" />}
-                <div id="create-post-btn" onClick={createPost}>What's on your mind, {user.firstName}?</div>
-            </div>
-            <div id="timeline-posts">
-                {posts ?
+        <main id="search" className={darkMode ? 'dark' : null}>
+            <div id="search-results">
+                <h1>Search Results for: {query}</h1>
+                {posts && posts.length > 0 ?
                     posts.map(post => {
                         return (
                             post.public ?
@@ -77,14 +66,14 @@ const Timeline = ({user}) => {
                             : null
                         )
                     })
-                : null}
+                : <div id="search-no-results">No results.</div>}
             </div>
             {showPostForm ?
                 <PostForm user={user} post={targetPost} setShowPostForm={setShowPostForm}
                     refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
             : null}
-        </div>
+        </main>
     );
 };
 
-export default Timeline;
+export default Search;

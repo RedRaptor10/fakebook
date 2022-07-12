@@ -831,6 +831,19 @@ main {
   font-size: 20px;
 }
 
+/* Search */
+#search-results {
+  width: 50%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+#search-no-results {
+  margin: 16px 0;
+}
+
 /* Users / Requests */
 #users, #requests-sent, #requests-received {
   display: block;
@@ -1037,6 +1050,10 @@ main.dark #profile-no-posts {
 
 main.dark h1 {
   color: var(--link-color-dark);
+}
+
+main.dark #search-no-results {
+  color: var(--color-dark);
 }
 
 main.dark .users-list-user, main.dark .requests-list-user {
