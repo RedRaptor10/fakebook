@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { deleteCookie } from '../helpers/cookies';
 import checkImage from '../helpers/checkImage';
 import defaultPhoto from '../assets/default-photo.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon } from '@fortawesome/free-solid-svg-icons';
 
 const Header = ({user, setUser, darkMode, setDarkMode}) => {
     const navigate = useNavigate();
@@ -29,7 +31,7 @@ const Header = ({user, setUser, darkMode, setDarkMode}) => {
                     <button id="dark-mode-btn" type="button">
                         <div id="dark-mode-btn-switch"></div>
                     </button>
-                    <span>Dark Mode</span>
+                    <FontAwesomeIcon icon={faMoon} />
                 </div>
                 <Link to={'/' + user.username} id="header-name">
                     {user.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + user._id + '/' + user.photo) ?

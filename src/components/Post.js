@@ -6,6 +6,8 @@ import { getCookie } from '../helpers/cookies';
 import checkImage from '../helpers/checkImage';
 import defaultPhoto from '../assets/default-photo.jpg';
 import getElapsedTime from '../helpers/getElapsedTime';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEarthAmericas, faLock, faThumbsUp, faThumbsDown, faMessage, faPencil, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 const Post = ({user, post, updatePost, deletePost}) => {
     const [likes, setLikes] = useState(post.likes);
@@ -72,28 +74,43 @@ const Post = ({user, post, updatePost, deletePost}) => {
                     </div>
                     <div className="post-date-public">
                         <span className="post-date">{getElapsedTime(new Date(post.date))}</span>
-                        <span className="post-public">{post.public ? 'Public' : 'Private'}</span>
+                        <span className="post-public">
+                            {post.public ?
+                                <span>
+                                    <FontAwesomeIcon icon={faEarthAmericas} />
+                                    Public
+                                </span>
+                            :
+                                <span>
+                                    <FontAwesomeIcon icon={faLock} />
+                                    Private
+                                </span>}
+                        </span>
                     </div>
                 </div>
             </div>
             <div className="post-content">{post.content}</div>
             {likes.length > 0 ?
-                <div className="post-likes">{likes.length + (likes.length === 1 ? ' Like' : ' Likes')}</div>
+                <div className="post-likes"><FontAwesomeIcon icon={faThumbsUp} />{likes.length + (likes.length === 1 ? ' Like' : ' Likes')}</div>
             : null}
             {user._id === post.author._id ?
                 <div className="post-btns">
-                    <button onClick={() => { document.getElementById('post-' + post._id).querySelector('.comment-form-input').focus() }}>Comment</button>
-                    <button onClick={() => { updatePost(post) }}>Edit</button>
-                    <button onClick={() => { deletePost(post) }}>Delete</button>
+                    <button onClick={() => { document.getElementById('post-' + post._id).querySelector('.comment-form-input').focus() }}>
+                        <FontAwesomeIcon icon={faMessage} />Comment
+                    </button>
+                    <button onClick={() => { updatePost(post) }}><FontAwesomeIcon icon={faPencil} />Edit</button>
+                    <button onClick={() => { deletePost(post) }}><FontAwesomeIcon icon={faTrashCan} />Delete</button>
                 </div>
             :
                 <div className="post-btns">
                     {likes.includes(user._id) ?
-                        <button onClick={() => { likePost('unlike') }}>Unlike</button>
+                        <button onClick={() => { likePost('unlike') }}><FontAwesomeIcon icon={faThumbsDown} />Unlike</button>
                     :
-                        <button onClick={() => { likePost('like') }}>Like</button>
+                        <button onClick={() => { likePost('like') }}><FontAwesomeIcon icon={faThumbsUp} />Like</button>
                     }
-                    <button onClick={() => { document.getElementById('post-' + post._id).querySelector('.comment-form-input').focus() }}>Comment</button>
+                    <button onClick={() => { document.getElementById('post-' + post._id).querySelector('.comment-form-input').focus() }}>
+                        <FontAwesomeIcon icon={faMessage} />Comment
+                    </button>
                 </div>}
             <CommentForm user={user} post={post} refreshToggle={refreshToggle} setRefreshToggle={setRefreshToggle} />
             {comments ?

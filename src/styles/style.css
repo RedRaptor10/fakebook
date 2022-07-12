@@ -191,6 +191,10 @@ header a:hover {
 	display: block;
 }
 
+#dark-mode-btn-container .svg-inline--fa {
+  color: var(--link-color);
+}
+
 header .profile-photo {
   width: 32px;
   height: 32px;
@@ -581,7 +585,7 @@ main {
   color: var(--link-color);
 }
 
-.post-date {
+.post-date, .post-public .svg-inline--fa {
   margin-right: 8px;
 }
 
@@ -591,6 +595,10 @@ main {
 
 .post-likes {
   color: var(--link-color);
+}
+
+.post-likes .svg-inline--fa {
+  margin-right: 8px;
 }
 
 .post-btns {
@@ -614,6 +622,10 @@ main {
 .post-btns button:hover {
   background: var(--background-secondary-color);
   border-radius: 8px;
+}
+
+.post-btns .svg-inline--fa {
+  margin-right: 16px;
 }
 
 /* Comment Form */
@@ -900,6 +912,10 @@ header.dark #dark-mode-btn {
 
 header.dark #dark-mode-btn-switch {
 	left: 24px;
+}
+
+header.dark #dark-mode-btn-container .svg-inline--fa {
+  color: var(--link-color-dark);
 }
 
 header.dark #header-name {
