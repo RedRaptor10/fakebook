@@ -51,9 +51,9 @@ table {
 :root {
   --primary-color: #1877f2;
   --background-color: #fff;
-  --background-color-dark: rgb(48, 48, 48);
+  --background-color-dark: rgb(36, 37, 38);
   --background-secondary-color: rgb(240, 245, 245);
-  --background-secondary-color-dark: rgb(64, 64, 64);
+  --background-secondary-color-dark: rgb(32, 33, 34);
   --color: #1c1e21;
   --color-dark: rgb(224, 224, 224);
   --link-color: #8a8d91;
@@ -911,7 +911,7 @@ header.dark #header-name:hover {
 }
 
 main.dark {
-  background: rgb(96, 96, 96);
+  background: rgb(28, 30, 33);
 }
 
 main.dark #sidebar, main.dark #contacts {
@@ -924,7 +924,7 @@ main.dark #sidebar a, main.dark #contacts a {
 }
 
 main.dark #sidebar li:hover, main.dark #contacts li:hover {
-  background: rgb(96, 96, 96);
+  background: var(--background-color-dark);
 }
 
 main.dark #create-post-container {
