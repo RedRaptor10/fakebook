@@ -28,7 +28,7 @@ const Contacts = ({user}) => {
 
     return (
         <div id="contacts">
-            <h3>Contacts</h3>
+            <h2>Contacts</h2>
             {contacts ?
                 <ul id="contacts-list">
                     {contacts.map(contact => {
