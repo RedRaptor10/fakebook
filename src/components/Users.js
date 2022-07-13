@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import UserItem from './UserItem';
 import { getCookie } from '../helpers/cookies';
-import checkImage from '../helpers/checkImage';
-import defaultPhoto from '../assets/default-photo.jpg';
 
 const Users = ({user, setUser, darkMode}) => {
     const [users, setUsers] = useState();
@@ -26,65 +24,14 @@ const Users = ({user, setUser, darkMode}) => {
         });
     }, [user]);
 
-    const handleRequest = (action, username) => {
-        let subroute;
-        if (action === 'delete') { subroute = '/delete-friend' }
-        else if (action === 'send') { subroute = '/send-request' }
-        else if (action === 'add') { subroute = '/add-friend' }
-        else if (action === 'deleteSent') { subroute = '/delete-request/sent' }
-        else if (action === 'deleteReceived') { subroute = '/delete-request/received' }
-
-        let token = getCookie('fakebook_api_token');
-
-        const options = {
-            method: 'POST',
-            headers: { 'Authorization': 'Bearer ' + token },
-            mode: 'cors'
-        };
-
-        fetch(process.env.REACT_APP_SERVER + 'api/users/' + username + subroute, options)
-        .then(function(res) { return res.json(); })
-        .then(function(res) {
-            // Set User and Profile states and update token
-            setUser(res.user);
-            document.cookie = 'fakebook_api_token=' + res.token + '; SameSite=Lax; path=/';
-        });
-    };
-
     return (
-        <main id="users" class={darkMode ? 'dark' : null}>
+        <main id="users" className={darkMode ? 'dark' : null}>
             <h1>Find Friends</h1>
             {users ?
                 <div id="users-list">
                     {users.map(u => {
                         return (
-                            u._id !== user._id ?
-                                <div key={u._id} className="users-list-user">
-                                    <div className="users-list-info">
-                                        <Link to={'/' + u.username}>
-                                            {u.photo && checkImage(process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + u._id + '/' + u.photo) ?
-                                                <img className="profile-photo" src={process.env.REACT_APP_SERVER + '/uploads/profile-photos/' + u._id + '/' + u.photo}
-                                                    alt="" />
-                                            :
-                                                <img className="profile-photo" src={defaultPhoto} alt="" />}
-                                        </Link>
-                                        <Link to={'/' + u.username}>
-                                            <div className="users-list-name">{u.firstName + ' ' + u.lastName}</div>
-                                        </Link>
-                                    </div>
-                                    <div className="users-list-btns">
-                                        {u.friends.includes(user._id) ? <button className="btn btn-red" onClick={() => { handleRequest('delete', u.username) }}>Delete Friend</button> :
-                                        u.requests.received.includes(user._id) ? <button className="btn btn-red" onClick={() => { handleRequest('deleteSent', u.username) }}>Cancel Friend Request</button> :
-                                        u.requests.sent.includes(user._id) ?
-                                            <div>
-                                                <button className="btn btn-blue" onClick={() => { handleRequest('add', u.username) }}>Accept Request</button>
-                                                <button className="btn btn-red" onClick={() => { handleRequest('deleteReceived', u.username) }}>Delete Request</button>
-                                            </div>
-                                        :
-                                            <button className="btn btn-blue" onClick={() => { handleRequest('send', u.username) }}>Add Friend</button>}
-                                    </div>
-                                </div>
-                            : null
+                            <UserItem key={u._id} user={user} setUser={setUser} item={u} />
                         )
                     })}
                 </div>

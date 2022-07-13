@@ -64,7 +64,7 @@ const App = () => {
               user ? <Profile user={user} setUser={setUser} darkMode={darkMode} /> : <LogInForm setUser={setUser} />
             } />
             <Route exact path="/search/:category" element={
-              user ? <Search user={user} darkMode={darkMode} /> : <LogInForm setUser={setUser} />
+              user ? <Search user={user} setUser={setUser} darkMode={darkMode} /> : <LogInForm setUser={setUser} />
             } />
             <Route exact path="/users" element={
               user ? <Users user={user} setUser={setUser} darkMode={darkMode} /> : <LogInForm setUser={setUser} />
