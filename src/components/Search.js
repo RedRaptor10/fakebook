@@ -4,6 +4,8 @@ import Post from './Post';
 import PostForm from './PostForm';
 import UserItem from './UserItem';
 import { getCookie } from '../helpers/cookies';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMessage, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Search = ({user, setUser, darkMode}) => {
     let { category } = useParams();
@@ -65,10 +67,16 @@ const Search = ({user, setUser, darkMode}) => {
             <ul id="search-categories">
                 <h2>Filters</h2>
                 <li className={category === 'posts' ? 'category-active' : null}>
-                    <Link to={'/search/posts?q=' + query}>Posts</Link>
+                    <Link to={'/search/posts?q=' + query}>
+                        <FontAwesomeIcon icon={faMessage} />
+                        Posts
+                    </Link>
                 </li>
                 <li className={category === 'users' ? 'category-active' : null}>
-                    <Link to={'/search/users?q=' + query}>People</Link>
+                    <Link to={'/search/users?q=' + query}>
+                        <FontAwesomeIcon icon={faUser} />
+                        People
+                    </Link>
                 </li>
             </ul>
             <div id="search-results">

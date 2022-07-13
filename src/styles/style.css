@@ -522,6 +522,10 @@ main {
   margin-right: 8px;
 }
 
+#search-categories li .svg-inline--fa {
+  margin-right: 16px;
+}
+
 /* Timeline */
 #timeline {
     width: 50%;
