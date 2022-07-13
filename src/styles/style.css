@@ -462,8 +462,8 @@ main {
   border-radius: 50%;
 }
 
-/* Sidebar / Contacts */
-#sidebar, #contacts {
+/* Sidebar / Contacts / Search Categories */
+#sidebar, #contacts, #search-categories {
     position: fixed;
     background: var(--background-secondary-color);
     width: 25%;
@@ -475,7 +475,7 @@ main {
     right: 0;
 }
 
-#contacts h3 {
+#contacts h2, #search-categories h2 {
   display: flex;
   align-items: center;
   height: 64px;
@@ -484,29 +484,30 @@ main {
   user-select: none;
 }
 
-#sidebar a, #contacts a {
+#sidebar a, #contacts a, #search-categories a {
   display: flex;
   align-items: center;
   width: 100%;
   height: 100%;
   padding: 16px 32px;
   color: #000;
+  font-size: 20px;
   font-weight: bold;
   box-sizing: border-box;
 }
 
-#sidebar a:hover, #contacts a:hover {
+#sidebar a:hover, #contacts a:hover, #search-categories a:hover {
   text-decoration: none;
 }
 
-#sidebar li, #contacts li {
+#sidebar li, #contacts li, #search-categories li {
   display: flex;
   align-items: center;
   height: 64px;
   max-height: 64px;
 }
 
-#sidebar li:hover, #contacts li:hover {
+#sidebar li:hover, #contacts li:hover, #search-categories li:hover, .category-active {
   background: rgb(224, 224, 224);
 }
 
@@ -870,11 +871,16 @@ main {
 }
 
 #search-results {
-  width: 50%;
+  width: 75%;
   height: 100%;
-  margin: 0 auto;
+  margin-left: 25%;
   padding: 32px;
   box-sizing: border-box;
+}
+
+#search-results .post {
+  width: calc(75% / 1.5);
+  margin: 16px auto;
 }
 
 #search-no-results {
@@ -914,10 +920,11 @@ main {
 .users-list-user, .requests-list-user {
   display: flex;
   flex-direction: column;
-  background: var(--background-secondary-color);
+  background: var(--background-color);
   width: calc(50% - 16px);
   padding: 8px;
   border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
 }
 
@@ -989,16 +996,16 @@ main.dark {
   background: rgb(28, 30, 33);
 }
 
-main.dark #sidebar, main.dark #contacts {
+main.dark #sidebar, main.dark #contacts, main.dark #search-categories {
   background: var(--background-secondary-color-dark);
   color: var(--color-dark);
 }
 
-main.dark #sidebar a, main.dark #contacts a {
+main.dark #sidebar a, main.dark #contacts a, main.dark #search-categories a {
   color: var(--color-dark);
 }
 
-main.dark #sidebar li:hover, main.dark #contacts li:hover {
+main.dark #sidebar li:hover, main.dark #contacts li:hover, main.dark #search-categories li:hover, main.dark .category-active {
   background: var(--background-color-dark);
 }
 

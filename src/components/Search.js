@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams, Link } from 'react-router-dom';
 import Post from './Post';
 import PostForm from './PostForm';
+import UserItem from './UserItem';
 import { getCookie } from '../helpers/cookies';
 
-const Search = ({user, darkMode}) => {
-    const { category } = useParams();
+const Search = ({user, setUser, darkMode}) => {
+    let { category } = useParams();
     const [searchParams] = useSearchParams();
     const query = searchParams.get('q');
     const [posts, setPosts] = useState();
+    const [users, setUsers] = useState();
     const [showPostForm, setShowPostForm] = useState(false);
     const [targetPost, setTargetPost] = useState();
     const [refreshToggle, setRefreshToggle] = useState(false);
@@ -28,9 +30,13 @@ const Search = ({user, darkMode}) => {
             return res.json();
         })
         .then(function(res) {
-            setPosts(res);
+            if (category === 'posts') {
+                setPosts(res);
+            } else if (category === 'users') {
+                setUsers(res);
+            }
         });
-    }, [user._id, refreshToggle, category, query]);
+    }, [user, refreshToggle, category, query]);
 
     const updatePost = post => {
         document.body.classList.add('disable-scroll');
@@ -56,9 +62,18 @@ const Search = ({user, darkMode}) => {
 
     return (
         <main id="search" className={darkMode ? 'dark' : null}>
+            <ul id="search-categories">
+                <h2>Filters</h2>
+                <li className={category === 'posts' ? 'category-active' : null}>
+                    <Link to={'/search/posts?q=' + query}>Posts</Link>
+                </li>
+                <li className={category === 'users' ? 'category-active' : null}>
+                    <Link to={'/search/users?q=' + query}>People</Link>
+                </li>
+            </ul>
             <div id="search-results">
                 <h1>Search Results for: {query}</h1>
-                {posts && posts.length > 0 ?
+                {category === 'posts' && posts && posts.length > 0 ?
                     posts.map(post => {
                         return (
                             post.public ?
@@ -66,7 +81,17 @@ const Search = ({user, darkMode}) => {
                             : null
                         )
                     })
-                : <div id="search-no-results">No results.</div>}
+                :
+                category === 'users' && users && users.length > 0 ?
+                    <div id="users-list">
+                        {users.map(u => {
+                            return (
+                                <UserItem key={u._id} user={user} setUser={setUser} item={u} />
+                            );
+                        })}
+                    </div>
+                :
+                    <div id="search-no-results">No results.</div>}
             </div>
             {showPostForm ?
                 <PostForm user={user} post={targetPost} setShowPostForm={setShowPostForm}
