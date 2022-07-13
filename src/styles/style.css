@@ -516,14 +516,14 @@ main {
   align-items: center;
 }
 
+#sidebar li .svg-inline--fa, #search-categories li .svg-inline--fa {
+  margin-right: 16px;
+}
+
 #sidebar .profile-photo, #contacts .profile-photo {
   width: 32px;
   height: 32px;
   margin-right: 8px;
-}
-
-#search-categories li .svg-inline--fa {
-  margin-right: 16px;
 }
 
 /* Timeline */

@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import checkImage from '../helpers/checkImage';
 import defaultPhoto from '../assets/default-photo.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserGroup, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = ({user}) => {
     return (
@@ -15,8 +17,18 @@ const Sidebar = ({user}) => {
                     <span>{user.firstName + ' ' + user.lastName}</span>
                 </Link>
             </li>
-            <li><Link to="/users">Find Friends</Link></li>
-            <li><Link to="/friends/requests">Requests</Link></li>
+            <li>
+                <Link to="/users">
+                    <FontAwesomeIcon icon={faUserGroup} />
+                    Find Friends
+                </Link>
+            </li>
+            <li>
+                <Link to="/friends/requests">
+                    <FontAwesomeIcon icon={faUserPlus} />
+                    Requests
+                </Link>
+            </li>
         </ul>
     );
 };
