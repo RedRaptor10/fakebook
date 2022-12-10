@@ -2,6 +2,8 @@
 
 Fakebook is a clone of a popular social media website created in NodeJS using Express.
 
+Backend API hosted on [Render](https://render.com/) (previously Heroku).
+
 [View Demo](https://redraptor10.github.io/fakebook/)
 
 **Server** - [View Repo](https://github.com/RedRaptor10/fakebook-api/)
